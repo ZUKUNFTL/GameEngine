@@ -3,6 +3,8 @@
 
 #include "Core.h"
 #include "spdlog/spdlog.h"
+#include "spdlog/fmt/ostr.h"
+
 //»’÷æ¿‡
 namespace Hazel{
 
