@@ -1,11 +1,10 @@
 #pragma once
-#include <memory>
 
 #include "Core.h"
 #include "spdlog/spdlog.h"
 #include "spdlog/fmt/ostr.h"
 
-//ÈÕÖ¾Àà
+//æ—¥å¿—ç±»
 namespace Hazel{
 
 	class HAZEL_API Log
@@ -23,7 +22,7 @@ namespace Hazel{
 
 
 //Core log macros
-//HZ_CORE_ERROR(...)ÒòÎªËüÊÇÒ»¸ö¿É±äÊýÁ¿µÄ²ÎÊý,__VA_ARGS__ ÊÇÒ»¸ö¿É±ä²ÎÊýµÄºê.
+//HZ_CORE_ERROR(...)å› ä¸ºå®ƒæ˜¯ä¸€ä¸ªå¯å˜æ•°é‡çš„å‚æ•°,__VA_ARGS__ æ˜¯ä¸€ä¸ªå¯å˜å‚æ•°çš„å®.
 #define  HZ_CORE_TRACE(...)   ::Hazel::Log::GetCoreLogger()->trace(__VA_ARGS__)
 #define  HZ_CORE_INFO(...)    ::Hazel::Log::GetCoreLogger()->info(__VA_ARGS__)
 #define  HZ_CORE_WARN(...)    ::Hazel::Log::GetCoreLogger()->warn(__VA_ARGS__)
@@ -37,5 +36,5 @@ namespace Hazel{
 #define  HZ_ERROR(...)   ::Hazel::Log::GetClientLogger()->error(__VA_ARGS__)
 #define  HZ_FATAL(...)   ::Hazel::Log::GetClientLogger()->fatal(__VA_ARGS__)
 
-//Èç¹û²»Ïë¹¹½¨Ëü¿ÉÒÔÕâÑù×ö
+//å¦‚æžœä¸æƒ³æž„å»ºå®ƒå¯ä»¥è¿™æ ·åš
 //#define HZ_CORE_INFO 0

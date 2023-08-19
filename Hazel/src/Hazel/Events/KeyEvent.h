@@ -1,28 +1,26 @@
 #pragma once
 #include "Event.h"
 
-#include <sstream>
-
 namespace Hazel {
 	class HAZEL_API KeyEvent : public Event
 	{
 	public:
 		inline int GetKeyCode() const { return m_KeyCode; }
 
-		//Ëü¼ÈÊÇ°´¼üÊÂ¼ş£¬Ò²ÊÇÊäÈëÊÂ¼ş
+		//å®ƒæ—¢æ˜¯æŒ‰é”®äº‹ä»¶ï¼Œä¹Ÿæ˜¯è¾“å…¥äº‹ä»¶
 		EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
 	protected:
 		KeyEvent(int keycode)
 			: m_KeyCode(keycode) {}
 
-		//°´¼üµÄcode
+		//æŒ‰é”®çš„code
 		int m_KeyCode;
 	};
 
 	class HAZEL_API KeyPressedEvent : public KeyEvent
 	{
 	public:
-		//repeatCount£º°´¼ü°´ÏÂÖ®ºóÖØ¸´µÄ´ÎÊı 
+		//repeatCountï¼šæŒ‰é”®æŒ‰ä¸‹ä¹‹åé‡å¤çš„æ¬¡æ•° 
 		KeyPressedEvent(int keycode, int repeatCount)
 			: KeyEvent(keycode), m_RepeatCount(repeatCount) {}
 
@@ -36,19 +34,19 @@ namespace Hazel {
 		}
 
 		/*
-			##typeÔÚÕâÀï¾ÍÊÇEventType::KeyPressed£¬#µÄ¹¦ÄÜÊÇ½«ÆäºóÃæµÄºê²ÎÊı½øĞĞ×Ö·û´®»¯²Ù×÷£¬ÓÃ##°ÑÁ½¸öºê²ÎÊıÌùºÏÔÚÒ»Æğ. 
-			//ÕâÀïÎÒÃÇ²»ĞèÒªÓĞ°´¼üÊÂ¼şÀàµÄÊµÀıÀ´²é¿´ÊÇÊ²Ã´ÀàĞÍ£¬ÒòÎª°´¼üÊÂ¼ş×ÜÊÇÒ»¸ö°´¼üÊÂ¼ş£¬²»¹ÜÊµÀıÊÇÊ²Ã´£¬Òò´ËÎÒÃÇ½«ËüÉùÃ÷Î»¾²Ì¬±äÁ¿
+			##typeåœ¨è¿™é‡Œå°±æ˜¯EventType::KeyPressedï¼Œ#çš„åŠŸèƒ½æ˜¯å°†å…¶åé¢çš„å®å‚æ•°è¿›è¡Œå­—ç¬¦ä¸²åŒ–æ“ä½œï¼Œç”¨##æŠŠä¸¤ä¸ªå®å‚æ•°è´´åˆåœ¨ä¸€èµ·. 
+			//è¿™é‡Œæˆ‘ä»¬ä¸éœ€è¦æœ‰æŒ‰é”®äº‹ä»¶ç±»çš„å®ä¾‹æ¥æŸ¥çœ‹æ˜¯ä»€ä¹ˆç±»å‹ï¼Œå› ä¸ºæŒ‰é”®äº‹ä»¶æ€»æ˜¯ä¸€ä¸ªæŒ‰é”®äº‹ä»¶ï¼Œä¸ç®¡å®ä¾‹æ˜¯ä»€ä¹ˆï¼Œå› æ­¤æˆ‘ä»¬å°†å®ƒå£°æ˜ä½é™æ€å˜é‡
 			static EventType GetStaticType() { return EventType::##type; }\
 			virtual EventType GetEventType() const override { return GetStaticType(); }\
 			virtual const char* GetName() const override { return #type; }
 		*/
-		//Í¨¹ıºêÀ´¶¨Òå¸ü¼Ó¼òµ¥
+		//é€šè¿‡å®æ¥å®šä¹‰æ›´åŠ ç®€å•
 		EVENT_CLASS_TYPE(KeyPressed)
 	private:
 		int m_RepeatCount;
 	};
 
-	//¼üÅÌÊÍ·ÅÊÂ¼ş
+	//é”®ç›˜é‡Šæ”¾äº‹ä»¶
 	class HAZEL_API KeyReleasedEvent : public KeyEvent
 	{
 	public:

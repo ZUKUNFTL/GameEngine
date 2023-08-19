@@ -1,23 +1,18 @@
 #pragma once
-
+#include "hzpch.h"
 #include "Hazel/Core.h"
 
-//ËüÃÇÓ¦¸ÃÐ´ÔÚÔ¤±àÒëÍ·ÎÄ¼þ£¬ÒòÎªËüÃÇÊÇ±ê×¼¿â
-#include <string>
-#include <functional>
-#include <fstream>
-
 /*
-	HazelÖÐµÄÊÂ¼þÎª×èÈûÊÂ¼þ£¬ÒòÎªµ±ÎÒÃÇ´¦ÀíÕâÐ©Êó±ê°´ÏÂÊÂ¼þµÄÊ±ºò£¬¿ÉÄÜÖ±½ÓÔÚÕ»ÉÏ¹¹ÔìÊÂ¼þ£¬È»ºóÁ¢¼´µ÷ÓÃ»Øµ÷º¯Êý¡£	
-	ËùÒÔµ±ÎÒÃÇ´¦ÀíÕâ¸öÊÂ¼þµÄÊ±ºò£¬»áÔÝÍ£ËùÓÐÆäËûÊÂ¼þ¡£Òò´Ë³ÆÎª×èÈûÊÂ¼þ¡£Î´À´¿ÉÒÔ´´½¨´ø»º³åµÄÊÂ¼þ£¬»ù±¾ÉÏ¾ÍÊÇ²¶»ñ
-	ÕâÐ©ÐÅÏ¢£¬ÔÚÄ³¸öµØ·½¶ÓÁÐ´æ´¢£¬²»×èÈûÆäËûÊÂ¼þ£¬È»ºó¿ÉÄÜÃ¿Ö¡±éÀúÊÂ¼þ¶ÓÁÐ¡£È»ºóµ÷¶ÈºÍ´¦ÀíËüÃÇ£¬¶ø²»ÊÇÔÚÊÕµ½ÊÂ¼þ
-	Ê±Á¢¼´´¦Àí¡£
+	Hazelä¸­çš„äº‹ä»¶ä¸ºé˜»å¡žäº‹ä»¶ï¼Œå› ä¸ºå½“æˆ‘ä»¬å¤„ç†è¿™äº›é¼ æ ‡æŒ‰ä¸‹äº‹ä»¶çš„æ—¶å€™ï¼Œå¯èƒ½ç›´æŽ¥åœ¨æ ˆä¸Šæž„é€ äº‹ä»¶ï¼Œç„¶åŽç«‹å³è°ƒç”¨å›žè°ƒå‡½æ•°ã€‚	
+	æ‰€ä»¥å½“æˆ‘ä»¬å¤„ç†è¿™ä¸ªäº‹ä»¶çš„æ—¶å€™ï¼Œä¼šæš‚åœæ‰€æœ‰å…¶ä»–äº‹ä»¶ã€‚å› æ­¤ç§°ä¸ºé˜»å¡žäº‹ä»¶ã€‚æœªæ¥å¯ä»¥åˆ›å»ºå¸¦ç¼“å†²çš„äº‹ä»¶ï¼ŒåŸºæœ¬ä¸Šå°±æ˜¯æ•èŽ·
+	è¿™äº›ä¿¡æ¯ï¼Œåœ¨æŸä¸ªåœ°æ–¹é˜Ÿåˆ—å­˜å‚¨ï¼Œä¸é˜»å¡žå…¶ä»–äº‹ä»¶ï¼Œç„¶åŽå¯èƒ½æ¯å¸§éåŽ†äº‹ä»¶é˜Ÿåˆ—ã€‚ç„¶åŽè°ƒåº¦å’Œå¤„ç†å®ƒä»¬ï¼Œè€Œä¸æ˜¯åœ¨æ”¶åˆ°äº‹ä»¶
+	æ—¶ç«‹å³å¤„ç†ã€‚
 */
 namespace Hazel {
 
 	enum class EventType
 	{
-		//ËùÓÐµÄÊÂ¼þÀàÐÍ£¬Ã¿¸öÊÂ¼þ¶¼ÓÐ¶ÔÓ¦µÄ´úÂë
+		//æ‰€æœ‰çš„äº‹ä»¶ç±»åž‹ï¼Œæ¯ä¸ªäº‹ä»¶éƒ½æœ‰å¯¹åº”çš„ä»£ç 
 		None = 0,
 		WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
 		AppTick, AppUpdate, AppRender,
@@ -27,10 +22,10 @@ namespace Hazel {
 
 	enum EventCategory
 	{
-		//ÊÂ¼þ¹ýÂËÆ÷
-		//ÎÒÃÇÓÐÄÜÁ¦ÈÃÒ»¸öÊÂ¼þÊôÓÚ¶à¸öÀà±ð£¬ÀýÈç£¬¼üÅÌÊó±êºÍÊó±ê°´Å¥ÊÂ¼þ¶¼ÊÇÊäÈëÊÂ¼þ£¬Êó±ê°´Å¥ÊÂ¼þ¾ÍÊÇÊó±êÊÂ¼þ¡£
-		//ÎÒÃÇÏëÔÚµ¥Ò»ÊÂ¼þÀàÐÍÉÏÓ¦ÓÃ¶à¸öÀà±ð£¬ËùÒÔÎÒÃÇ´´½¨Ò»¸öÎ»Óò£¬ÕâÑùÎÒÃÇ¾ÍÄÜÉèÖÃ¶à¸öÎ»£¬
-		//È»ºóÎÒÃÇ¿ÉÒÔ¼òµ¥µÄÆÁ±ÎËüÃÇ¿´¿´Ò»¸öÊÂ¼þÊôÓÚÊ²Ã´ÀàÐÍ£¬»òÕßÒ»¸öÊÂ¼þÊµ¼ÊÉÏÊôÓÚÊ²Ã´ÀàÐÍ¡£
+		//äº‹ä»¶è¿‡æ»¤å™¨
+		//æˆ‘ä»¬æœ‰èƒ½åŠ›è®©ä¸€ä¸ªäº‹ä»¶å±žäºŽå¤šä¸ªç±»åˆ«ï¼Œä¾‹å¦‚ï¼Œé”®ç›˜é¼ æ ‡å’Œé¼ æ ‡æŒ‰é’®äº‹ä»¶éƒ½æ˜¯è¾“å…¥äº‹ä»¶ï¼Œé¼ æ ‡æŒ‰é’®äº‹ä»¶å°±æ˜¯é¼ æ ‡äº‹ä»¶ã€‚
+		//æˆ‘ä»¬æƒ³åœ¨å•ä¸€äº‹ä»¶ç±»åž‹ä¸Šåº”ç”¨å¤šä¸ªç±»åˆ«ï¼Œæ‰€ä»¥æˆ‘ä»¬åˆ›å»ºä¸€ä¸ªä½åŸŸï¼Œè¿™æ ·æˆ‘ä»¬å°±èƒ½è®¾ç½®å¤šä¸ªä½ï¼Œ
+		//ç„¶åŽæˆ‘ä»¬å¯ä»¥ç®€å•çš„å±è”½å®ƒä»¬çœ‹çœ‹ä¸€ä¸ªäº‹ä»¶å±žäºŽä»€ä¹ˆç±»åž‹ï¼Œæˆ–è€…ä¸€ä¸ªäº‹ä»¶å®žé™…ä¸Šå±žäºŽä»€ä¹ˆç±»åž‹ã€‚
 		None = 0,
 		EventCategoryApplication = BIT(0),
 		EventCategoryInput = BIT(1),
@@ -40,42 +35,42 @@ namespace Hazel {
 	};
 
 	/*
-		\#µÄ¹¦ÄÜÊÇ½«ÆäºóÃæµÄºê²ÎÊý½øÐÐ×Ö·û´®»¯²Ù×÷£¬ÓÃ##°ÑÁ½¸öºê²ÎÊýÌùºÏÔÚÒ»Æð.
-		ÕâÀïÎÒÃÇ²»ÐèÒªÓÐ°´¼üÊÂ¼þÀàµÄÊµÀýÀ´²é¿´ÊÇÊ²Ã´ÀàÐÍ£¬ÒòÎª°´¼üÊÂ¼þ×ÜÊÇÒ»¸ö°´¼üÊÂ¼þ£¬²»¹ÜÊµÀýÊÇÊ²Ã´£¬Òò´ËÎÒÃÇ½«GetStaticTypeÉùÃ÷Îª¾²Ì¬±äÁ¿¡£
-		¶øÎÒÃÇÖ®ËùÒÔÐèÒªÒ»¸ö³ÉÔ±º¯ÊýGetEventType£¨£©£¬ÊÇÒòÎªµ±ÎÒÃÇÖ»ÊÇÒ»¸öÖ¸ÏòÊÂ¼þ£¨event£©µÄÒýÓÃ»òÖ¸ÕëÊ±£¬ÎÒÃÇÏ£ÍûÄÜ¹»¿´µ½ËüÊµ¼ÊÊÇÊ²Ã´ÀàÐÍ¡£
+		\#çš„åŠŸèƒ½æ˜¯å°†å…¶åŽé¢çš„å®å‚æ•°è¿›è¡Œå­—ç¬¦ä¸²åŒ–æ“ä½œï¼Œç”¨##æŠŠä¸¤ä¸ªå®å‚æ•°è´´åˆåœ¨ä¸€èµ·.
+		è¿™é‡Œæˆ‘ä»¬ä¸éœ€è¦æœ‰æŒ‰é”®äº‹ä»¶ç±»çš„å®žä¾‹æ¥æŸ¥çœ‹æ˜¯ä»€ä¹ˆç±»åž‹ï¼Œå› ä¸ºæŒ‰é”®äº‹ä»¶æ€»æ˜¯ä¸€ä¸ªæŒ‰é”®äº‹ä»¶ï¼Œä¸ç®¡å®žä¾‹æ˜¯ä»€ä¹ˆï¼Œå› æ­¤æˆ‘ä»¬å°†GetStaticTypeå£°æ˜Žä¸ºé™æ€å˜é‡ã€‚
+		è€Œæˆ‘ä»¬ä¹‹æ‰€ä»¥éœ€è¦ä¸€ä¸ªæˆå‘˜å‡½æ•°GetEventTypeï¼ˆï¼‰ï¼Œæ˜¯å› ä¸ºå½“æˆ‘ä»¬åªæ˜¯ä¸€ä¸ªæŒ‡å‘äº‹ä»¶ï¼ˆeventï¼‰çš„å¼•ç”¨æˆ–æŒ‡é’ˆæ—¶ï¼Œæˆ‘ä»¬å¸Œæœ›èƒ½å¤Ÿçœ‹åˆ°å®ƒå®žé™…æ˜¯ä»€ä¹ˆç±»åž‹ã€‚
 	*/
 	#define EVENT_CLASS_TYPE(type) static EventType GetStaticType() { return EventType::##type; }\
 								virtual EventType GetEventType() const override { return GetStaticType(); }\
 								virtual const char* GetName() const override { return #type; }
 
-	//ÓÃºê½øÐÐ¶¨Òå¸ü¼Ó·½±ã£¬ÎÒÃÇ²»ÓÃÔÚ¸÷×ÔÀàÖÐ½øÐÐÊµÏÖ
+	//ç”¨å®è¿›è¡Œå®šä¹‰æ›´åŠ æ–¹ä¾¿ï¼Œæˆ‘ä»¬ä¸ç”¨åœ¨å„è‡ªç±»ä¸­è¿›è¡Œå®žçŽ°
 	#define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
 
-	//ÊÂ¼þµÄ»ùÀà
+	//äº‹ä»¶çš„åŸºç±»
 	class HAZEL_API Event
 	{
 		friend class EventDispatcher;
 	public:
-		//»ñÈ¡ÊÂ¼þÀàÐÍ
+		//èŽ·å–äº‹ä»¶ç±»åž‹
 		virtual EventType GetEventType() const = 0;
-		//»ñÈ¡ÃüÃû
+		//èŽ·å–å‘½å
 		virtual const char* GetName() const = 0;
-		//»ñÈ¡ÊÂ¼þÀà±ð±êÖ¾
+		//èŽ·å–äº‹ä»¶ç±»åˆ«æ ‡å¿—
 		virtual int GetCategoryFlags() const = 0;
-		//tostringÄ¬ÈÏ·µ»ØÊÂ¼þÃû³Æ
+		//tostringé»˜è®¤è¿”å›žäº‹ä»¶åç§°
 		virtual std::string ToString() const { return GetName(); }
 
-		//ÅÐ¶ÏËüÊÇ·ñÊôÓÚÄÇ¸öÀà±ðµÄÊÂ¼þ
+		//åˆ¤æ–­å®ƒæ˜¯å¦å±žäºŽé‚£ä¸ªç±»åˆ«çš„äº‹ä»¶
 		inline bool IsInCategory(EventCategory category)
 		{
 			return GetCategoryFlags() & category;
 		}
 	protected:
-		//ÅÐ¶ÏÊÂ¼þÊÇ·ñ±»´¦Àí£¬Èç¹û±»´¦ÀíËü¾Í²»»á´«²¥µ½ÆäËû²ã
+		//åˆ¤æ–­äº‹ä»¶æ˜¯å¦è¢«å¤„ç†ï¼Œå¦‚æžœè¢«å¤„ç†å®ƒå°±ä¸ä¼šä¼ æ’­åˆ°å…¶ä»–å±‚
 		bool m_Handled = false;
 	};
 
-	//ÊÂ¼þµ÷¶ÈÆ÷
+	//äº‹ä»¶è°ƒåº¦å™¨
 	class EventDispatcher
 	{
 		template<typename T>
@@ -89,7 +84,7 @@ namespace Hazel {
 		template<typename T>
 		bool Dispatch(EventFn<T> func)
 		{
-			//Èç¹ûm_EventµÄÊÂ¼þÀàÐÍÏàÍ¬ÔòÖ´ÐÐ¶ÔÓ¦µÄº¯Êý
+			//å¦‚æžœm_Eventçš„äº‹ä»¶ç±»åž‹ç›¸åŒåˆ™æ‰§è¡Œå¯¹åº”çš„å‡½æ•°
 			if (m_Event.GetEventType() == T::GetStaticType())
 			{
 				m_Event.m_Handled = func(*(T*)&m_Event);
@@ -101,7 +96,7 @@ namespace Hazel {
 		Event& m_Event;
 	};
 
-	//ÖØÔØ<<·ûºÅ£¬¿ÉÒÔÈÃÈÕÖ¾Ä£¿éÖ´ÐÐtostringº¯Êý
+	//é‡è½½<<ç¬¦å·ï¼Œå¯ä»¥è®©æ—¥å¿—æ¨¡å—æ‰§è¡Œtostringå‡½æ•°
 	inline std::ostream& operator<<(std::ostream& os, const Event& e)
 	{
 		return os << e.ToString();

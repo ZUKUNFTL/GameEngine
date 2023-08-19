@@ -2,11 +2,10 @@
 
 #include "Event.h"
 
-#include <sstream>
 
 namespace Hazel {
 
-	//´°¿ÚËõ·ÅÊÂ¼ş
+	//çª—å£ç¼©æ”¾äº‹ä»¶
 	class HAZEL_API WindowResizeEvent : public Event
 	{
 	public:
@@ -29,7 +28,7 @@ namespace Hazel {
 		unsigned int m_Width, m_Height;
 	};
 
-	//´°¿Ú¹Ø±ÕÊÂ¼ş
+	//çª—å£å…³é—­äº‹ä»¶
 	class HAZEL_API WindowCloseEvent : public Event
 	{
 	public:
@@ -39,7 +38,7 @@ namespace Hazel {
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 	
-	//¹´Ñ¡ÊÂ¼ş
+	//å‹¾é€‰äº‹ä»¶
 	class HAZEL_API AppTickEvent : public Event
 	{
 	public:
@@ -49,7 +48,7 @@ namespace Hazel {
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 
-	//¸üĞÂÊÂ¼ş
+	//æ›´æ–°äº‹ä»¶
 	class HAZEL_API AppUpdateEvent : public Event
 	{
 	public:
@@ -59,7 +58,7 @@ namespace Hazel {
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 
-	//äÖÈ¾ÊÂ¼ş
+	//æ¸²æŸ“äº‹ä»¶
 	class HAZEL_API AppRenderEvent : public Event
 	{
 	public:

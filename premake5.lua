@@ -18,6 +18,10 @@ project "Hazel"
 	targetdir("bin/" .. outputdir .. "/%{prj.name}")
 	objdir("bin-int/" .. outputdir .. "/%{prj.name}")
 
+	--pchsource对于vs来说是必须的尽管对我们来说不需要，在其他平台上，它会被忽略
+	pchheader "hzpch.h"
+	pchsource "Hazel/src/hzpch.cpp"
+
 	files
 	{
 		"%{prj.name}/src/**.h",

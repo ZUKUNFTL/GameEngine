@@ -1,3 +1,4 @@
+#include "hzpch.h"
 #include "Log.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 namespace Hazel {
@@ -7,11 +8,11 @@ namespace Hazel {
 
 	void Log::Init()
 	{
-		//Õâ»áÒÔÕýÈ·µÄ·½Ê½¸øËûÉÏÉ«£¬È»ºóÓÐÊ±¼ä´Á%T£¬È»ºóÓÖlogµÄÃû×Ö%n£¬ÕâÀïÎÒÃÇÊÇclient£¬È»ºóÓÐÊµ¼ÊµÄÈÕÖ¾ÏûÏ¢%v%$
+		//è¿™ä¼šä»¥æ­£ç¡®çš„æ–¹å¼ç»™ä»–ä¸Šè‰²ï¼Œç„¶åŽæœ‰æ—¶é—´æˆ³%Tï¼Œç„¶åŽåˆlogçš„åå­—%nï¼Œè¿™é‡Œæˆ‘ä»¬æ˜¯clientï¼Œç„¶åŽæœ‰å®žé™…çš„æ—¥å¿—æ¶ˆæ¯%v%$
 		spdlog::set_pattern("%^[%T] %n: %v%$");
-		//´´½¨Ò»¸öÈÕÖ¾ÊµÌå
+		//åˆ›å»ºä¸€ä¸ªæ—¥å¿—å®žä½“
 		s_CoreLogger = spdlog::stdout_color_mt("Hazel");
-		//ÉèÖÃÈÕÖ¾µÈ¼¶
+		//è®¾ç½®æ—¥å¿—ç­‰çº§
 		s_CoreLogger->set_level(spdlog::level::trace);
 
 		s_ClientLogger = spdlog::stdout_color_mt("APP");

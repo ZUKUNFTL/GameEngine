@@ -2,11 +2,9 @@
 
 #include "Event.h"
 
-#include <sstream>
-
 namespace Hazel {
 
-	//鼠标移动事件
+	//榧犳爣绉诲姩浜嬩欢
 	class HAZEL_API MouseMovedEvent : public Event
 	{
 	public:
@@ -29,7 +27,7 @@ namespace Hazel {
 		float m_MouseX, m_MouseY;
 	};
 
-	//鼠标滚动事件
+	//榧犳爣婊氬姩浜嬩欢
 	class HAZEL_API MouseScrolledEvent : public Event
 	{
 	public:
@@ -52,7 +50,7 @@ namespace Hazel {
 		float m_XOffset, m_YOffset;
 	};
 
-	//鼠标按钮事件
+	//榧犳爣鎸夐挳浜嬩欢
 	class HAZEL_API MouseButtonEvent : public Event
 	{
 	public:
@@ -66,7 +64,7 @@ namespace Hazel {
 		int m_Button;
 	};
 
-	//鼠标点击事件
+	//榧犳爣鐐瑰嚮浜嬩欢
 	class HAZEL_API MouseButtonPressedEvent : public MouseButtonEvent
 	{
 	public:
@@ -83,7 +81,7 @@ namespace Hazel {
 		EVENT_CLASS_TYPE(MouseButtonPressed)
 	};
 
-	//鼠标释放事件
+	//榧犳爣閲婃斁浜嬩欢
 	class HAZEL_API MouseButtonReleasedEvent : public MouseButtonEvent
 	{
 	public:
