@@ -3,7 +3,8 @@
 #include "Core.h"
 
 #include "Events/Event.h"
-namespace Hazel{
+#include "Window.h"
+namespace Hazel {
 
 	class HAZEL_API Application
 	{
@@ -12,9 +13,12 @@ namespace Hazel{
 		virtual ~Application();
 
 		void Run();
-	};
+	private:
+		std::unique_ptr<Window> m_Window;
+		bool m_Running = true;
 
-	//需要在客户端定义
+		//需要在客户端定义
+	};
 	Application* CreateApplication();
 }
 
