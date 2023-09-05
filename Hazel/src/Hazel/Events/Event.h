@@ -57,7 +57,7 @@ namespace Hazel {
 		virtual const char* GetName() const = 0;
 		//获取事件类别标志
 		virtual int GetCategoryFlags() const = 0;
-		//tostring默认返回事件名称
+		//tostring默认返回事件名称（用于日志记录用）
 		virtual std::string ToString() const { return GetName(); }
 
 		//判断它是否属于那个类别的事件

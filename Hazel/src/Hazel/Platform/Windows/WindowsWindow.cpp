@@ -7,7 +7,7 @@
 
 namespace Hazel {
 
-	//ÎÒÃÇÖ»ÏëÔÚ³õÊ¼»¯´°¿ÚµÄÊ±ºò³õÊ¼»¯Ò»´Îglfw,Òò´Ë½«ËüÉèÖÃÎª¾²Ì¬
+	//æˆ‘ä»¬åªæƒ³åœ¨åˆå§‹åŒ–çª—å£çš„æ—¶å€™åˆå§‹åŒ–ä¸€æ¬¡glfw,å› æ­¤å°†å®ƒè®¾ç½®ä¸ºé™æ€
 	static bool s_GLFWInitialized = false;
 
 	static void GLFWErrorCallback(int error, const char* description)
@@ -32,15 +32,15 @@ namespace Hazel {
 
 	void WindowsWindow::Init(const WindowProps& props)
 	{
-		//ÉèÖÃÊôĞÔ
+		//è®¾ç½®å±æ€§
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
 		
-		//ÈÕÖ¾¼ÇÂ¼
+		//æ—¥å¿—è®°å½•
 		HZ_CORE_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
 
-		//ÕâÀïÎÒÃÇÖ»³õÊ¼»¯Ò»´Îglfw
+		//è¿™é‡Œæˆ‘ä»¬åªåˆå§‹åŒ–ä¸€æ¬¡glfw
 		if (!s_GLFWInitialized)
 		{
 			// TODO: glfwTerminate on system shutdown
@@ -50,14 +50,14 @@ namespace Hazel {
 			s_GLFWInitialized = true;
 		}
 		
-		//´´½¨glfw´°¿Ú
+		//åˆ›å»ºglfwçª—å£
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(m_Window);
-		//ÉèÖÃµ±Ç°Ê¹ÓÃµÄÊı¾İÖ¸Õë
+		//è®¾ç½®å½“å‰ä½¿ç”¨çš„æ•°æ®æŒ‡é’ˆ
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 
-		//ÉèÖÃGLFW´°¿ÚµÄ»Øµ÷º¯Êı
+		//è®¾ç½®GLFWçª—å£çš„å›è°ƒå‡½æ•°
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
 		{
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
@@ -65,6 +65,7 @@ namespace Hazel {
 			data.Height = height;
 
 			WindowResizeEvent event(width, height);
+			//è¿›è¡Œå¯¹åº”äº‹ä»¶çš„å›è°ƒï¼Œé€šè¿‡OnEventæ–¹æ³•
 			data.EventCallback(event);
 		});
 
@@ -141,25 +142,26 @@ namespace Hazel {
 
 	}
 
-	//¹Ø±Õ´°¿Ú
+	//å…³é—­çª—å£
 	void WindowsWindow::Shutdown()
 	{
 		glfwDestroyWindow(m_Window);
 	}
 
-	//ÌáÈ¡ÊÂ¼ş£¬½»»»»º³åÇø
+	//æå–äº‹ä»¶ï¼Œäº¤æ¢ç¼“å†²åŒº
 	void WindowsWindow::OnUpdate()
 	{
+		//å…¶å†…éƒ¨ä¼šè¿›è¡Œ glfw çš„äº‹ä»¶åˆ¤æ–­ï¼šglfwPollEvents
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
 	}
 
 	void WindowsWindow::SetVSync(bool enabled)
 	{
-		//½»»»¼ä¸ô±íÊ¾½»»»»º³åÇøÖ®Ç°µÈ´ıµÄÖ¡Êı£¬Í¨³£³ÆÎªvsync¡£
-		//Ä¬ÈÏÇé¿öÏÂ£¬½»»»¼ä¸ôÎª0£¬µ«ÒòÎªÆÁÄ»Ã¿ÃëÖ»¸üĞÂ60-75´Î£¬ËùÒÔ´ó²¿·ÖµÄ»­Ãæ²»»á±»ÏÔÊ¾¡£
-		//¶øÇÒ£¬»º³åÇøÓĞ¿ÉÄÜÔÚÆÁÄ»¸üĞÂµÄÖĞ¼ä½»»»£¬³öÏÖÆÁÄ»ËºÁÑµÄÇé¿ö¡£
-		//ËùÒÔ£¬¿ÉÒÔ½«¸Ã¼ä¸ôÉèÎª1£¬¼´Ã¿Ö¡¸üĞÂÒ»´Î¡£Ëü¿ÉÒÔÉèÖÃÎª¸ü¸ßµÄÖµ£¬µ«Õâ¿ÉÄÜµ¼ÖÂÊäÈëÑÓ³Ù¡£
+		//äº¤æ¢é—´éš”è¡¨ç¤ºäº¤æ¢ç¼“å†²åŒºä¹‹å‰ç­‰å¾…çš„å¸§æ•°ï¼Œé€šå¸¸ç§°ä¸ºvsyncã€‚
+		//é»˜è®¤æƒ…å†µä¸‹ï¼Œäº¤æ¢é—´éš”ä¸º0ï¼Œä½†å› ä¸ºå±å¹•æ¯ç§’åªæ›´æ–°60-75æ¬¡ï¼Œæ‰€ä»¥å¤§éƒ¨åˆ†çš„ç”»é¢ä¸ä¼šè¢«æ˜¾ç¤ºã€‚
+		//è€Œä¸”ï¼Œç¼“å†²åŒºæœ‰å¯èƒ½åœ¨å±å¹•æ›´æ–°çš„ä¸­é—´äº¤æ¢ï¼Œå‡ºç°å±å¹•æ’•è£‚çš„æƒ…å†µã€‚
+		//æ‰€ä»¥ï¼Œå¯ä»¥å°†è¯¥é—´éš”è®¾ä¸º1ï¼Œå³æ¯å¸§æ›´æ–°ä¸€æ¬¡ã€‚å®ƒå¯ä»¥è®¾ç½®ä¸ºæ›´é«˜çš„å€¼ï¼Œä½†è¿™å¯èƒ½å¯¼è‡´è¾“å…¥å»¶è¿Ÿã€‚
 		if (enabled)
 			glfwSwapInterval(1);
 		else

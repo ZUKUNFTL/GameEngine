@@ -33,13 +33,6 @@ namespace Hazel {
 			return ss.str();
 		}
 
-		/*
-			##type在这里就是EventType::KeyPressed，#的功能是将其后面的宏参数进行字符串化操作，用##把两个宏参数贴合在一起. 
-			//这里我们不需要有按键事件类的实例来查看是什么类型，因为按键事件总是一个按键事件，不管实例是什么，因此我们将它声明位静态变量
-			static EventType GetStaticType() { return EventType::##type; }\
-			virtual EventType GetEventType() const override { return GetStaticType(); }\
-			virtual const char* GetName() const override { return #type; }
-		*/
 		//通过宏来定义更加简单
 		EVENT_CLASS_TYPE(KeyPressed)
 	private:
