@@ -49,8 +49,10 @@ namespace Hazel {
 	//事件的基类
 	class HAZEL_API Event
 	{
-		friend class EventDispatcher;
 	public:
+		//判断事件是否被处理，如果被处理它就不会传播到其他层
+		bool Handled = false;
+
 		//获取事件类型
 		virtual EventType GetEventType() const = 0;
 		//获取命名
@@ -65,9 +67,7 @@ namespace Hazel {
 		{
 			return GetCategoryFlags() & category;
 		}
-	protected:
-		//判断事件是否被处理，如果被处理它就不会传播到其他层
-		bool m_Handled = false;
+
 	};
 
 	//事件调度器
@@ -87,7 +87,7 @@ namespace Hazel {
 			//如果m_Event的事件类型相同则执行对应的函数
 			if (m_Event.GetEventType() == T::GetStaticType())
 			{
-				m_Event.m_Handled = func(*(T*)&m_Event);
+				m_Event.Handled = func(*(T*)&m_Event);
 				return true;
 			}
 			return false;
