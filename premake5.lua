@@ -17,10 +17,12 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["GLFW"] = "Hazel/vendor/GLFW/include"
 IncludeDir["Glad"] = "Hazel/vendor/Glad/include"
+IncludeDir["ImGui"] = "Hazel/vendor/imgui"
 
 --添加了glfw的premake文件
 include "Hazel/vendor/GLFW"
 include "Hazel/vendor/Glad"
+include "Hazel/vendor/imgui"
 
 --location代表我们相对路径的当前目录
 --shadredlib代表我们是动态库
@@ -51,7 +53,8 @@ project "Hazel"
 		"%{prj.name}/vendor/spdlog/include",
 		--添加glfw的头文件 
 		"%{IncludeDir.GLFW}",
-		"%{IncludeDir.Glad}"
+		"%{IncludeDir.Glad}",
+		"%{IncludeDir.ImGui}"
 	}
 		
 	--静态链接
@@ -59,6 +62,7 @@ project "Hazel"
 	{ 
 		"GLFW",
 		"Glad",
+		"ImGui",
 		"opengl32.lib"
 	}
 

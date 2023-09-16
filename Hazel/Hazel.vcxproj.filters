@@ -10,8 +10,14 @@
     <Filter Include="Hazel\Platform">
       <UniqueIdentifier>{0D422A0B-F90F-1E11-E2A3-8E37CE10FA75}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Hazel\Platform\OpenGL">
+      <UniqueIdentifier>{A17A8072-0DE7-3B6D-D6DA-D3CA42065ED5}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Hazel\Platform\Windows">
       <UniqueIdentifier>{47A9AB1A-33A3-D46C-1C10-6B7D08A93AD9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hazel\imGui">
+      <UniqueIdentifier>{A3BDA19D-0F73-1A93-9867-146A041C1197}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -46,11 +52,17 @@
     <ClInclude Include="src\Hazel\Log.h">
       <Filter>Hazel</Filter>
     </ClInclude>
+    <ClInclude Include="src\Hazel\Platform\OpenGL\imGuiOpenGLrenderer.h">
+      <Filter>Hazel\Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Hazel\Platform\Windows\WindowsWindow.h">
       <Filter>Hazel\Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\Hazel\Window.h">
       <Filter>Hazel</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hazel\imGui\imGuiLayer.h">
+      <Filter>Hazel\imGui</Filter>
     </ClInclude>
     <ClInclude Include="src\hzpch.h" />
   </ItemGroup>
@@ -67,8 +79,14 @@
     <ClCompile Include="src\Hazel\Log.cpp">
       <Filter>Hazel</Filter>
     </ClCompile>
+    <ClCompile Include="src\Hazel\Platform\OpenGL\imGuiOpenGLrenderer.cpp">
+      <Filter>Hazel\Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Hazel\Platform\Windows\WindowsWindow.cpp">
       <Filter>Hazel\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Hazel\imGui\imGuiLayer.cpp">
+      <Filter>Hazel\imGui</Filter>
     </ClCompile>
     <ClCompile Include="src\hzpch.cpp" />
   </ItemGroup>
