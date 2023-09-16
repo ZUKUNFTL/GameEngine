@@ -31,7 +31,9 @@ namespace Hazel {
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
 
 		HZ_CORE_INFO("{0}", e);
-		for (auto it = m_LayerStack.begin(); it != m_LayerStack.begin();) {
+
+		//事件的处理顺序是从覆层开始处理
+		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
 			(*--it)->OnEvent(e);
 			//如果事件被处理，我们将中断，不会再继续传播到其他图层
 			if(e.Handled)
