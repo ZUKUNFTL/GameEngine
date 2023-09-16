@@ -16,9 +16,11 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 --Includir后期会加入多个路径因此我们用{}来表示。
 IncludeDir = {}
 IncludeDir["GLFW"] = "Hazel/vendor/GLFW/include"
+IncludeDir["Glad"] = "Hazel/vendor/Glad/include"
 
 --添加了glfw的premake文件
 include "Hazel/vendor/GLFW"
+include "Hazel/vendor/Glad"
 
 --location代表我们相对路径的当前目录
 --shadredlib代表我们是动态库
@@ -48,13 +50,15 @@ project "Hazel"
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
 		--添加glfw的头文件 
-		"%{IncludeDir.GLFW}"
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.Glad}"
 	}
 		
 	--静态链接
 	links 
 	{ 
 		"GLFW",
+		"Glad",
 		"opengl32.lib"
 	}
 
@@ -68,7 +72,10 @@ project "Hazel"
 		defines
 		{
 			"HZ_PLATFORM_WINDOWS",
-			"HZ_BUILD_DLL"
+			"HZ_BUILD_DLL",
+			--"HZ_ENABLE_ASSERTS",
+			--这个宏代表我们不包括任何打开的GLFW头文件，知道你引入opengl
+			"GLFW_INCLUDE_NONE"
 		}
 		--在hazel中进入bin目录并复制hazel.dll到sandbox中
 		postbuildcommands
@@ -131,12 +138,12 @@ project "Sandbox"
 		buildoptions "/MDd"
 		symbols "On"
 
-	filter "configurations:Debug"
+	filter "configurations:Release"
 		defines "HZ_RELEASE"
 		buildoptions "/MD"
 		symbols "On"
 
-	filter "configurations:Debug"
+	filter "configurations:Dist"
 		defines "HZ_DIST"
 		buildoptions "/MD"
 		symbols "On"

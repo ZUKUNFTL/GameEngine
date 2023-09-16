@@ -2,7 +2,7 @@
 
 #include "Hazel/Window.h"
 
-#include <GLFW//glfw3.h>
+#include <GLFW/glfw3.h>
 
 namespace Hazel{
 	class WindowsWindow : public Window
@@ -21,7 +21,7 @@ namespace Hazel{
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
 	private:
-		//³õÊ¼»¯
+		//ï¿½ï¿½Ê¼ï¿½ï¿½
 		virtual void Init(const WindowProps& props);
 		virtual void Shutdown();
 	private:

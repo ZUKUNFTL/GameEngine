@@ -5,6 +5,8 @@
 #include "Hazel/Events/MouseEvent.h"
 #include "Hazel/Events/KeyEvent.h"
 
+#include <glad/glad.h>
+
 namespace Hazel {
 
 	//我们只想在初始化窗口的时候初始化一次glfw,因此将它设置为静态
@@ -53,6 +55,9 @@ namespace Hazel {
 		//创建glfw窗口
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(m_Window);
+		//初始化GLAD
+		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		HZ_CORE_ASSERT(status, "Failed to initialize Glad");
 		//设置当前使用的数据指针
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
