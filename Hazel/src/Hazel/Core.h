@@ -10,6 +10,9 @@
 	#error Hazel only support Windows!
 #endif 
 
+#ifdef HZ_DEBUG
+	#define HZ_ENABLE_ASSERTS 
+#endif 
 
 #ifdef HZ_ENABLE_ASSERTS
 	//检查x是否成功，如果不成功则打印日志，并中断
