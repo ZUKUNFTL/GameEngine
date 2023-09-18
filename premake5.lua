@@ -1,5 +1,7 @@
 workspace "Hazel"
 	architecture"x64"
+	--启动项
+	startproject "Sandbox"
 
 	-- 这里release未必是发行版本，Dist才是完全的发行版本；release就是一个更快的Debug比如去掉一些日志啥的来测试。
 	configurations
@@ -84,7 +86,11 @@ project "Hazel"
 		--在hazel中进入bin目录并复制hazel.dll到sandbox中
 		postbuildcommands
 		{
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
+			--这表示%{cfg.buildtarget.relpath}/XXX
+			--第一次构建，premake 找不到这个目录（或者说没有创建这个目录）的原因是把第二个参数最后一个斜杠删掉了，这就导致这个路径表示一个文件而不是表示一个路径
+			--("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
+			--修改之后，将第二个参数整体用双引号包起来，表示这是一个 windows 路径，现在是 %{cfg.buildtarget.relpath}/“XXX”
+			("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
 		}
 
 	filter "configurations:Debug"
@@ -97,13 +103,13 @@ project "Hazel"
 		defines "HZ_RELEASE"
 		--buildoptions "/MD"
 		runtime "Release"
-		symbols "On"
+		optimize "On"
 
 	filter "configurations:Dist"
 		defines "HZ_DIST"
 		--buildoptions "/MD"
 		runtime "Release"
-		symbols "On"
+		optimize "On"
 
 project "Sandbox"
 	location "Sandbox"
@@ -148,9 +154,9 @@ project "Sandbox"
 	filter "configurations:Release"
 		defines "HZ_RELEASE"
 		runtime "Release"
-		symbols "On"
+		optimize "On"
 
 	filter "configurations:Dist"
 		defines "HZ_DIST"
 		runtime "Release"
-		symbols "On"
+		optimize "On"
