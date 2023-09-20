@@ -28,21 +28,23 @@ namespace Hazel {
 
 		virtual ~Window() {}
 
-		//¸úĞÂÎÒÃÇ´°¿ÚµÄ»º³åÇø£¬ÊäÈëÊÂ¼şµÈ£¬Ëü»áÔÚÎÒÃÇÓ¦ÓÃ³ÌĞòÖĞÒ»Ö±µ÷ÓÃ
+		//è·Ÿæ–°æˆ‘ä»¬çª—å£çš„ç¼“å†²åŒºï¼Œè¾“å…¥äº‹ä»¶ç­‰ï¼Œå®ƒä¼šåœ¨æˆ‘ä»¬åº”ç”¨ç¨‹åºä¸­ä¸€ç›´è°ƒç”¨
 		virtual void OnUpdate() = 0;
 
-		//·µ»Ø´°¿Ú¿í¶È
+		//è¿”å›çª—å£å®½åº¦
 		virtual unsigned int GetWidth() const = 0;
-		//·µ»Ø´°¿Ú¸ß¶È
+		//è¿”å›çª—å£é«˜åº¦
 		virtual unsigned int GetHeight() const = 0;
+		//è·å–çœŸå®çª—å£
+		virtual void* GetNativeWindow() const = 0;
 
 		// Window attributes
 		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
 		virtual void SetVSync(bool enabled) = 0;
 		virtual bool IsVSync() const = 0;
 
-		//²»Í¬µÄÆ½Ì¨ĞèÒªÈ¥ÊµÏÖ²»Í¬µÄcreate£¬macwindow,linuxwindowµÈ£¬ËüÃÇ¶¼¼Ì³ĞÓÚwindow
-		//Èç¹ûÎÒÃÇ´«ÈëÄ¬ÈÏµÄ½á¹¹Ìå£¬ÔòÀïÃæ¶¼ÊÇÄ¬ÈÏÖµ
+		//ä¸åŒçš„å¹³å°éœ€è¦å»å®ç°ä¸åŒçš„createï¼Œmacwindow,linuxwindowç­‰ï¼Œå®ƒä»¬éƒ½ç»§æ‰¿äºwindow
+		//å¦‚æœæˆ‘ä»¬ä¼ å…¥é»˜è®¤çš„ç»“æ„ä½“ï¼Œåˆ™é‡Œé¢éƒ½æ˜¯é»˜è®¤å€¼
 		static Window* Create(const WindowProps& props = WindowProps());
 	};
 

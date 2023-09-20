@@ -4,12 +4,13 @@
 #include "Hazel/Log.h"
 
 #include <glad/glad.h>
+#include "Hazel/Input.h"
 
 namespace Hazel {
 
 	#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
-	//µ¥Àý
+	//å•ä¾‹
 	Application* Application::s_Instance = nullptr;
 
 	Application::Application()
@@ -32,10 +33,10 @@ namespace Hazel {
 
 		HZ_CORE_INFO("{0}", e);
 
-		//ÊÂ¼þµÄ´¦ÀíË³ÐòÊÇ´Ó¸²²ã¿ªÊ¼´¦Àí
+		//äº‹ä»¶çš„å¤„ç†é¡ºåºæ˜¯ä»Žè¦†å±‚å¼€å§‹å¤„ç†
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
 			(*--it)->OnEvent(e);
-			//Èç¹ûÊÂ¼þ±»´¦Àí£¬ÎÒÃÇ½«ÖÐ¶Ï£¬²»»áÔÙ¼ÌÐø´«²¥µ½ÆäËûÍ¼²ã
+			//å¦‚æžœäº‹ä»¶è¢«å¤„ç†ï¼Œæˆ‘ä»¬å°†ä¸­æ–­ï¼Œä¸ä¼šå†ç»§ç»­ä¼ æ’­åˆ°å…¶ä»–å›¾å±‚
 			if(e.Handled)
 				break;
 		}
@@ -66,7 +67,9 @@ namespace Hazel {
 			glClearColor(1, 0, 1, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
 
-			//¸üÐÂÃ¿¸öÍ¼²ã
+			auto [x, y] = Input::GetMousePosition();
+			HZ_CORE_TRACE("{0}, {1}", x, y);
+			//æ›´æ–°æ¯ä¸ªå›¾å±‚
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
 

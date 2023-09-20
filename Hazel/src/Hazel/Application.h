@@ -37,3 +37,17 @@ namespace Hazel {
 	Application* CreateApplication();
 }
 
+
+
+class Person
+{
+public:
+	static Person* Get() {
+		if (!s_Instence) {
+			s_Instence = new Person();
+			return s_Instence;
+		}
+	}
+private:
+	static Person* s_Instence;
+};
