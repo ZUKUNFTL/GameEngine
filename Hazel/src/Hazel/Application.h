@@ -6,6 +6,8 @@
 #include "Hazel/LayerStack.h"
 #include "Hazel/Events/Event.h"
 #include "Hazel/Events/ApplicationEvent.h"
+
+#include "Hazel/imGui/imGuiLayer.h"
 namespace Hazel {
 
 	class HAZEL_API Application
@@ -28,6 +30,7 @@ namespace Hazel {
 		inline static Application& Get() { return *s_Instance; }
 	private:
 		std::unique_ptr<Window> m_Window;
+		ImGuiLayer* m_ImGuiLayer; //添加添加ImGUILayer
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 	private:

@@ -9,7 +9,7 @@ workspace "Hazel"
 		"Debug",
 		"Release",
 		"Dist"
-	}
+	} 
 
 --buildcfg代表我们的是发布还是调试，system代表我们的系统是mac还是windows，archittecture代表我们是x64还是32的
 --定义输出文件夹名称：Debug-windows-x86_64
@@ -83,6 +83,7 @@ project "Hazel"
 		{
 			"HZ_PLATFORM_WINDOWS",
 			"HZ_BUILD_DLL",
+			"IMGUI_API=__declspec(dllexport)",
 			--"HZ_ENABLE_ASSERTS",
 			--这个宏代表我们不包括任何打开的GLFW头文件，知道你引入opengl
 			"GLFW_INCLUDE_NONE"
@@ -133,6 +134,7 @@ project "Sandbox"
 	{
 		"Hazel/vendor/spdlog/include",
 		"Hazel/src",
+		"Hazel/vendor",
 		"%{IncludeDir.glm}"
 	}
 
@@ -148,7 +150,8 @@ project "Sandbox"
 		
 		defines
 		{
-			"HZ_PLATFORM_WINDOWS"
+			"HZ_PLATFORM_WINDOWS",
+			"IMGUI_API=__declspec(dllimport)"
 		}
 
 	filter "configurations:Debug"

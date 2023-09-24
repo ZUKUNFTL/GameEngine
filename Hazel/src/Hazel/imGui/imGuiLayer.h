@@ -4,6 +4,15 @@
 #include "Hazel/Events/MouseEvent.h"
 #include "Hazel/Events/KeyEvent.h"
 #include "Hazel/Events/ApplicationEvent.h"
+
+/*
+ä¹‹å‰çš„ImGuiLayeræ˜¯åœ¨SandboxApp.cppé‡ŒåŠ å…¥çš„ï¼Œè€Œå®é™…ä¸ŠImGuiåº”è¯¥æ˜¯æ¸¸æˆå¼•æ“è‡ªå¸¦çš„ä¸œè¥¿ï¼Œ
+ä¸åº”è¯¥æ˜¯ç”±ç”¨æˆ·å®šä¹‰æ·»åŠ åˆ°LayerStacké‡Œï¼Œæ‰€ä»¥éœ€è¦ä¸ºApplicationæä¾›å›ºæœ‰çš„ImGuiLayeræˆå‘˜ï¼Œ
+å¯ä»¥ç”¨å®æ‹¬èµ·æ¥ï¼ŒReleaseæ¸¸æˆçš„æ—¶å€™ï¼Œå°±ä¸ç”¨è¿™ä¸ªä¸œè¥¿ã€‚
+ä¸ºäº†è®©æ¯ä¸€ä¸ªLayeréƒ½æœ‰ä¸€ä¸ªImGuiLayerï¼Œè®©æ¯ä¸€ä¸ªLayeréƒ½ç»§æ‰¿ä¸€ä¸ªæ¥å£ï¼Œç”¨äºç»˜åˆ¶ImGuiçš„å†…å®¹ï¼Œ
+åŒæ—¶è®©ImGuiLayeræˆä¸ºHazelå†…åœ¨(intrinsic)çš„éƒ¨åˆ†ï¼Œéœ€è¦åœ¨Applicationé‡Œé¢åŠ ä¸Šå¯¹åº”çš„LayerStackï¼Œ
+ä¸å…¶å†…éƒ¨çš„Layerä¸€ä¸€å¯¹åº”.
+*/
 namespace Hazel {
 
 	class HAZEL_API ImGuiLayer :public Layer
@@ -11,24 +20,15 @@ namespace Hazel {
 	public:
 		ImGuiLayer();
 		~ImGuiLayer();
-		//µ±²ãÍÆÈë²ãÕ»£¬³ÉÎª³ÌĞòµÄÒ»²¿·ÖÊ±£¬±» Attached £¨Á´½Ó£©
-		void OnAttach();
-		//µ±²ã±»ÒÆ³ıÊ±£¬Detach£¨·ÖÀë£©
-		void OnDetach();
-		//OnUpdate ÔòÊÇÔÚ²ã¸üĞÂÊ±ÓÉ Application µ÷ÓÃ£¬Ó¦¸ÃÃ¿Ö¡µ÷ÓÃÒ»´Î
-		void OnUpdate();
-		//OnEvent£¬µ±²ãµÃµ½ÊÂ¼şÊ±£¬ÎÒÃÇ´ÓÕâÀï½ÓÊÕ¡£ÕâĞ©¶¼ÊÇĞéº¯Êı£¬ËùÒÔ¿ÉÒÔÔÚ´´½¨×Ô¼ºµÄ²ãÊ± override
-		void OnEvent(Event& event);
+		//å½“å±‚æ¨å…¥å±‚æ ˆï¼Œæˆä¸ºç¨‹åºçš„ä¸€éƒ¨åˆ†æ—¶ï¼Œè¢« Attached ï¼ˆé“¾æ¥ï¼‰
+		virtual void OnAttach() override;
+		 //å½“å±‚è¢«ç§»é™¤æ—¶ï¼ŒDetachï¼ˆåˆ†ç¦»ï¼‰
+		virtual void OnDetach() override;
+		virtual void OnImGuiRender() override;
 
-	private:
-		bool OnMouseButtonPressedEvent(MouseButtonPressedEvent& e);
-		bool OnMouseButtonReleasedEvent(MouseButtonReleasedEvent& e);
-		bool OnMouseMovedEvent(MouseMovedEvent& e);
-		bool OnMouseScrolledEvent(MouseScrolledEvent& e);
-		bool OnKeyPressedEvent(KeyPressedEvent& e);
-		bool OnKeyReleasedEvent(KeyReleasedEvent& e);
-		bool OnKeyTypedEvent(KeyTypedEvent& e);
-		bool OnWindowResizedEvent(WindowResizeEvent& e);
+		void Begin();
+		void End();
+
 	private:
 		float m_Time = 0.0f;
 	};

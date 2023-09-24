@@ -4,7 +4,7 @@
 
 #include <vector>
 
-//²ãÏµÍ³
+//å±‚ç³»ç»Ÿ
 namespace Hazel {
 
 	class HAZEL_API LayerStack
@@ -14,25 +14,27 @@ namespace Hazel {
 		LayerStack();
 		~LayerStack();
 		/*
-			ÎÒÃÇÏ£ÍûÔÚ½øĞĞÓÎÏ·Ñ­»·µÄÊ±ºò£¬Ã¿¸ö±»ÆôÓÃµÄ²ã£¨Layer£©¶¼»á°´ÕÕ²ãÕ»Ë³Ğò¸üĞÂ¡£
-			Í¨¹ıÕâÖÖ¸üĞÂÑ­»·£¬¿ÉÒÔÔÚ²ãÉÏ½øĞĞäÖÈ¾¡£ÏÔÈ»ÒòÎª²ãÕ»ÊÇÓĞË³ĞòµÄ£¬ÕâºÜÖØÒª¡£
-			ÒâÎ¶×ÅÄã¿ÉÒÔ°Ñ²ã·ÅÔÚÆäËû²ãµÄÉÏÃæ£¬Õâ»á¾ö¶¨»æÖÆË³Ğò¡£²ãÕ»¶ÔÓÚ¹¹½¨¡¢¸²²ãÏµÍ³Ò²ºÜÓĞÓÃ¡£
-			¸²²ãÄÜÈÃÄã°Ñ²ãÍÆÖÁ²ãÕ»µÄºó°ë²¿·Ö¡£
+			æˆ‘ä»¬å¸Œæœ›åœ¨è¿›è¡Œæ¸¸æˆå¾ªç¯çš„æ—¶å€™ï¼Œæ¯ä¸ªè¢«å¯ç”¨çš„å±‚ï¼ˆLayerï¼‰éƒ½ä¼šæŒ‰ç…§å±‚æ ˆé¡ºåºæ›´æ–°ã€‚
+			é€šè¿‡è¿™ç§æ›´æ–°å¾ªç¯ï¼Œå¯ä»¥åœ¨å±‚ä¸Šè¿›è¡Œæ¸²æŸ“ã€‚æ˜¾ç„¶å› ä¸ºå±‚æ ˆæ˜¯æœ‰é¡ºåºçš„ï¼Œè¿™å¾ˆé‡è¦ã€‚
+			æ„å‘³ç€ä½ å¯ä»¥æŠŠå±‚æ”¾åœ¨å…¶ä»–å±‚çš„ä¸Šé¢ï¼Œè¿™ä¼šå†³å®šç»˜åˆ¶é¡ºåºã€‚å±‚æ ˆå¯¹äºæ„å»ºã€è¦†å±‚ç³»ç»Ÿä¹Ÿå¾ˆæœ‰ç”¨ã€‚
+			è¦†å±‚èƒ½è®©ä½ æŠŠå±‚æ¨è‡³å±‚æ ˆçš„ååŠéƒ¨åˆ†ã€‚
 		*/
-		//×¢ÒâÎÒÃÇ¸ãÁËÒ»¸ö overlay£¬Õâ¸ö overlay ¾ÍÊÇÎÒÃÇËµµÄ¸²²ã¡£
-		/*Ò²¾ÍÊÇËµ£¬ÍÆÈëÒ»¸ö layer£¬¾ÍÏëÕı³£µØ push ½øÈ¥£¬Í¨¹ıÀàÖĞµÄµü´úÆ÷m_LayerInsert·ÅÈë£¬
-		m_LayerInsertÒ²¾ÍÊÇÕı³£ layer µÄ×îºóÒ»¸öÎ»ÖÃ£»¶øÒªÊÇÊÇ overlay £¬ÎÒÃÇ¾Í²»ĞèÒª¹Üµü´úÆ÷
-		m_LayerInsert µÄÎ»ÖÃ£¬¶øÊÇÖ±½Ó emplace_back ½øÈ¥£¬Òò´Ë LayerStack ÖĞµÄÅÅÁĞÏñÊÇÕâÑù £º 
-		layer layer overlayer overlayer £¬¶ø m_LayerInsert ¾ÍÓ¦¸ÃÖ¸ÏòÕâÀïµÚ¶ş¸ö layer µÄÎ»ÖÃ£¬
-		¼´×îºóÒ»¸ö·Ç overlayer µÄ layer¡£*/
+		/*
+			æ³¨æ„æˆ‘ä»¬æäº†ä¸€ä¸ª overlayï¼Œè¿™ä¸ª overlay å°±æ˜¯æˆ‘ä»¬è¯´çš„è¦†å±‚ã€‚
+			ä¹Ÿå°±æ˜¯è¯´ï¼Œæ¨å…¥ä¸€ä¸ª layerï¼Œå°±æƒ³æ­£å¸¸åœ° push è¿›å»ï¼Œé€šè¿‡ç±»ä¸­çš„è¿­ä»£å™¨m_LayerInsertæ”¾å…¥ï¼Œ
+			m_LayerInsertä¹Ÿå°±æ˜¯æ­£å¸¸ layer çš„æœ€åä¸€ä¸ªä½ç½®ï¼›è€Œè¦æ˜¯æ˜¯ overlay ï¼Œæˆ‘ä»¬å°±ä¸éœ€è¦ç®¡è¿­ä»£å™¨
+			m_LayerInsert çš„ä½ç½®ï¼Œè€Œæ˜¯ç›´æ¥ emplace_back è¿›å»ï¼Œå› æ­¤ LayerStack ä¸­çš„æ’åˆ—åƒæ˜¯è¿™æ · ï¼š
+			layer layer overlayer overlayer ï¼Œè€Œ m_LayerInsert å°±åº”è¯¥æŒ‡å‘è¿™é‡Œç¬¬äºŒä¸ª layer çš„ä½ç½®ï¼Œ
+			å³æœ€åä¸€ä¸ªé overlayer çš„ layerã€‚
+		*/
 
-		//ÍÆÈëÆÕÍ¨²ã
+		//æ¨å…¥æ™®é€šå±‚
 		void PushLayer(Layer* layer);
-		//ÍÆÈë¸²²ã
+		//æ¨å…¥è¦†å±‚
 		void PushOverlay(Layer* overlay);
-		//ÍÆ³ö²ã
+		//æ¨å‡ºå±‚
 		void PopLayer(Layer* layer);
-		//ÍÆ³ö¸²²ã
+		//æ¨å‡ºè¦†å±‚
 		void PopOverlay(Layer* overlay);
 
 		std::vector<Layer*>::iterator begin() { return m_Layers.begin(); }
@@ -40,8 +42,7 @@ namespace Hazel {
 
 	private:
 		std::vector<Layer*> m_Layers;
-		std::vector<Layer*>::iterator m_LayerInsert;
+		unsigned int m_LayerInsertIndex = 0;
 	};
 
 }
-

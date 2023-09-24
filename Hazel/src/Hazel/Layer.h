@@ -11,13 +11,15 @@ namespace Hazel {
 		Layer(const std::string& name = "Layer");
 		virtual ~Layer();
 
-		//µ±²ãÍÆÈë²ãÕ»£¬³ÉÎª³ÌĞòµÄÒ»²¿·ÖÊ±£¬±» Attached £¨Á´½Ó£©
+		//å½“å±‚æ¨å…¥å±‚æ ˆï¼Œæˆä¸ºç¨‹åºçš„ä¸€éƒ¨åˆ†æ—¶ï¼Œè¢« Attached ï¼ˆé“¾æ¥ï¼‰
 		virtual void OnAttach() {}
-		//µ±²ã±»ÒÆ³ıÊ±£¬Detach£¨·ÖÀë£©
+		//å½“å±‚è¢«ç§»é™¤æ—¶ï¼ŒDetachï¼ˆåˆ†ç¦»ï¼‰
 		virtual void OnDetach() {}
-		//OnUpdate ÔòÊÇÔÚ²ã¸üĞÂÊ±ÓÉ Application µ÷ÓÃ£¬Ó¦¸ÃÃ¿Ö¡µ÷ÓÃÒ»´Î
+		//OnUpdate åˆ™æ˜¯åœ¨å±‚æ›´æ–°æ—¶ç”± Application è°ƒç”¨ï¼Œåº”è¯¥æ¯å¸§è°ƒç”¨ä¸€æ¬¡
 		virtual void OnUpdate() {}
-		//OnEvent£¬µ±²ãµÃµ½ÊÂ¼şÊ±£¬ÎÒÃÇ´ÓÕâÀï½ÓÊÕ¡£ÕâĞ©¶¼ÊÇĞéº¯Êı£¬ËùÒÔ¿ÉÒÔÔÚ´´½¨×Ô¼ºµÄ²ãÊ± override
+		//Imguiå›¾å±‚æ¸²æŸ“
+		virtual void OnImGuiRender(){}
+		//OnEventï¼Œå½“å±‚å¾—åˆ°äº‹ä»¶æ—¶ï¼Œæˆ‘ä»¬ä»è¿™é‡Œæ¥æ”¶ã€‚è¿™äº›éƒ½æ˜¯è™šå‡½æ•°ï¼Œæ‰€ä»¥å¯ä»¥åœ¨åˆ›å»ºè‡ªå·±çš„å±‚æ—¶ override
 		virtual void OnEvent(Event& event) {}
 
 		inline const std::string& GetName() const { return m_DebugName; }
