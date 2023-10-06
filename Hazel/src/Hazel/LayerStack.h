@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Hazel/Core.h"
 #include "Layer.h"
 
@@ -18,8 +18,6 @@ namespace Hazel {
 			通过这种更新循环，可以在层上进行渲染。显然因为层栈是有顺序的，这很重要。
 			意味着你可以把层放在其他层的上面，这会决定绘制顺序。层栈对于构建、覆层系统也很有用。
 			覆层能让你把层推至层栈的后半部分。
-		*/
-		/*
 			注意我们搞了一个 overlay，这个 overlay 就是我们说的覆层。
 			也就是说，推入一个 layer，就想正常地 push 进去，通过类中的迭代器m_LayerInsert放入，
 			m_LayerInsert也就是正常 layer 的最后一个位置；而要是是 overlay ，我们就不需要管迭代器

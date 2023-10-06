@@ -31,9 +31,13 @@ include "Hazel/vendor/imgui"
 --shadredlib代表我们是动态库
 project "Hazel"
 	location "Hazel"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++17"
+	--staticruntime:on代表着当我们构建可执行文件时，它会链接到它自己的运行时库。
+	--而我们在动态库中将它关闭的原因是动态链接dll文件时，dll文件需要它运行时的库，因为dll文件就像最终产品一样。
+	--这因为如此，我们静态链接，我们每个dll都有不同版本的库，这是个大问题。
+	staticruntime "on"
 
 	--targetdir 二进制的输出文件夹目录，等于我们把所有东西都放在bin/debug-windows-x64/Hazel
 	--objdir 中间文件的输出文件夹目录
@@ -76,7 +80,6 @@ project "Hazel"
 	--filter说明它只适用于所选的系统
 	--staticruntim这和静态库链接相关
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "latest"
 		--定义宏
 		defines
@@ -88,39 +91,29 @@ project "Hazel"
 			--这个宏代表我们不包括任何打开的GLFW头文件，知道你引入opengl
 			"GLFW_INCLUDE_NONE"
 		}
-		--在hazel中进入bin目录并复制hazel.dll到sandbox中
-		postbuildcommands
-		{
-			--这表示%{cfg.buildtarget.relpath}/XXX
-			--第一次构建，premake 找不到这个目录（或者说没有创建这个目录）的原因是把第二个参数最后一个斜杠删掉了，这就导致这个路径表示一个文件而不是表示一个路径
-			--("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
-			--修改之后，将第二个参数整体用双引号包起来，表示这是一个 windows 路径，现在是 %{cfg.buildtarget.relpath}/“XXX”
-			("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
-		}
-
 	filter "configurations:Debug"
 		defines "HZ_DEBUG"
-		--buildoptions "/MDd"
 		runtime "Debug"
-		symbols "On"
+		--symbols:on代表debug版本
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "HZ_RELEASE"
-		--buildoptions "/MD"
 		runtime "Release"
-		optimize "On"
+		--optimize:on代表release版本
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "HZ_DIST"
-		--buildoptions "/MD"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir("bin/" .. outputdir .. "/%{prj.name}")
 	objdir("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -145,26 +138,24 @@ project "Sandbox"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
-		systemversion "10.0"
+		systemversion "latest"
 		
 		defines
 		{
 			"HZ_PLATFORM_WINDOWS",
-			"IMGUI_API=__declspec(dllimport)"
 		}
 
 	filter "configurations:Debug"
 		defines "HZ_DEBUG"
 		runtime "Debug"
-		symbols "On"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "HZ_RELEASE"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "HZ_DIST"
 		runtime "Release"
-		optimize "On"
+		optimize "on"

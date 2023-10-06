@@ -1,6 +1,7 @@
 #pragma once
 
 #ifdef HZ_PLATFORM_WINDOWS
+#if HZ_DYNAMIC_LINK
 	#ifdef HZ_BUILD_DLL
 		#define HAZEL_API __declspec(dllexport)
 		//#define IMGUI_API _declspec (dllexport) // 添加导出这一行不要了,在premake里面做
@@ -8,6 +9,9 @@
 		#define HAZEL_API __declspec(dllimport)
 		//#define IMGUI_API __declspec (dllimport) // 添加导入
 	#endif
+#else
+	#define HAZEL_API 
+#endif
 #else
 	#error Hazel only support Windows!
 #endif 
