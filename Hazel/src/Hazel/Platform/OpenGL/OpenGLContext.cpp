@@ -21,8 +21,11 @@ namespace Hazel {
 
 
 		HZ_CORE_INFO("OpenGL Info:");
+		//厂商
 		HZ_CORE_INFO("  Vendor: {0}", glGetString(GL_VENDOR));
+		//显卡型号
 		HZ_CORE_INFO("  Renderer: {0}", glGetString(GL_RENDERER));
+		//opengl版本
 		HZ_CORE_INFO("  Version: {0}", glGetString(GL_VERSION));
 	}
 
