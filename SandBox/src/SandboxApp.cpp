@@ -113,10 +113,13 @@ public:
 		)";
 
 		m_BlueShader.reset(new Hazel::Shader(blueShaderVertexSrc, blueShaderFragmentSrc));
+		
 	}
 
 	void OnUpdate(Hazel::TimeStep ts) override
 	{
+		HZ_TRACE("Delta time: {0}s ({1}ms)", ts.GetMilliseconds(), ts.GetMilliseconds());
+
 		if (Hazel::Input::IsKeyPressed(HZ_KEY_LEFT))
 			m_CameraPosition.x -= m_CameraMoveSpeed * ts;
 		else if (Hazel::Input::IsKeyPressed(HZ_KEY_RIGHT))
@@ -135,8 +138,8 @@ public:
 		Hazel::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		Hazel::RenderCommand::Clear();
 
-		m_Camera.SetPosition({ 0.5f, 0.5f, 0.0f });
-		m_Camera.SetRotation(45.0f);
+		m_Camera.SetPosition(m_CameraPosition);
+		m_Camera.SetRotation(m_CameraRotation);
 
 		Hazel::Renderer::BeginScene(m_Camera);
 
@@ -148,13 +151,7 @@ public:
 
 	void OnEvent(Hazel::Event& event) override
 	{
-		if (event.GetEventType() == Hazel::EventType::KeyPressed) 
-		{
-			Hazel::KeyPressedEvent& e = (Hazel::KeyPressedEvent&) event;
-			if (e.GetKeyCode() == HZ_KEY_TAB)
-				HZ_TRACE("Tab key is pressed (event)!");
-			HZ_TRACE("{0}", (char)e.GetKeyCode());
-		}
+
 	}
 
 	virtual void OnImGuiRender() override
@@ -181,13 +178,10 @@ public:
 	Sandbox()
 	{
 		PushLayer(new ExampleLayer());
-
-
 	}
 
 	~Sandbox()
 	{
-
 	}
 };
 

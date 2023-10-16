@@ -12,6 +12,8 @@
 
 #include "Hazel/imGui/imGuiLayer.h"
 
+#include "Hazel/Core/Timestep.h"
+
 // ---Renderer------------------------
 #include "Hazel/Renderer/Renderer.h"
 #include "Hazel/Renderer/RenderCommand.h"
