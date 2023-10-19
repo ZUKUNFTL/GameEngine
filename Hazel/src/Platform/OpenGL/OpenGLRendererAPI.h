@@ -8,7 +8,7 @@ namespace Hazel {
 	public:
 		virtual void Clear() const;
 		virtual void SetClearColor(const glm::vec4&) const;
-		virtual void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray);
+		virtual void DrawIndexed(const Ref<VertexArray>& vertexArray);
 
 	};
 }
