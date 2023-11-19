@@ -1,4 +1,4 @@
-#include "ParticleSystem.h"
+﻿#include "ParticleSystem.h"
 
 #include <glm/gtc/constants.hpp>
 #define GLM_ENABLE_EXPERIMENTAL
@@ -58,7 +58,7 @@ void ParticleSystem::OnRender(Hazel::OrthographicCamera& camera)
 	for (auto& particle : m_ParticlePool)
 	{
 		// 当粒子标记为不存活，则不再绘制
-		if (!particle.Active)
+		if (!particle.Active) 
 			continue;
 
 		// Fade away particles
