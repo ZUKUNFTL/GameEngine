@@ -28,7 +28,7 @@ private:
 		float Rotation = 0.0f;
 		float SizeBegin, SizeEnd;
 
-		float LifeTime = 1.0f;
+		float LifeTime = 5.0f;
 		float LifeRemaining = 0.0f;
 
 		bool Active = false;
