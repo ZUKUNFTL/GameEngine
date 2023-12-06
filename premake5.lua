@@ -1,7 +1,7 @@
 workspace "Hazel"
 	architecture"x64"
 	--启动项
-	startproject "Sandbox"
+	startproject "Hazelnut"
 
 	-- 这里release未必是发行版本，Dist才是完全的发行版本；release就是一个更快的Debug比如去掉一些日志啥的来测试。
 	configurations
@@ -173,8 +173,8 @@ project "Sandbox"
 		optimize "on"
 
 
-project "Hazel-Editor"
-	location "Hazel-Editor"
+project "Hazelnut"
+	location "Hazelnut"
 	kind "ConsoleApp"
 	language "C++"
 	cppdialect "C++17"
