@@ -8,7 +8,7 @@
 #include "Hazel/Core/Application.h"
 #include "Hazel/Events/Event.h"
 
-//��ʱ��
+//暂时的
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 namespace Hazel {
@@ -89,6 +89,34 @@ namespace Hazel {
 			ImGui::UpdatePlatformWindows();
 			ImGui::RenderPlatformWindowsDefault();
 			glfwMakeContextCurrent(backup_current_context);
+		}
+	}
+
+	void ImGuiLayer::OnEvent(Event& e)
+	{
+		/*
+			m_BlockEvents：false-> settings视口不阻塞事件，viewport面板能接收滚轮事件
+			m_BlockEvents：true->  settings视口阻塞事件，viewport视口不能接收滚轮事件
+		*/
+		/*
+		   imgui窗口会阻塞鼠标滚轮事件，即ImGuiLayer窗口处理了鼠标滚轮事件，不会传入给下一级的OnEvent。
+		   因为Application的onevent处理了窗口滚动，就会跳出
+		   for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
+			   if (e.Handled)
+				   break;
+			   (*--it)->OnEvent(e);
+		   }
+	   */
+		if (m_BlockEvents)
+		{
+			HZ_WARN("event: {0}", e.GetName());
+			if (e.GetEventType() == EventType::MouseMoved) {
+				return;
+			}
+			ImGuiIO& io = ImGui::GetIO();
+			// e.Handled = e.handled | true & true; 结果为true，所以上述的application 的 event会跳出
+			e.Handled |= e.IsInCategory(EventCategoryMouse) & io.WantCaptureMouse;
+			e.Handled |= e.IsInCategory(EventCategoryKeyboard) & io.WantCaptureKeyboard;
 		}
 	}
 

@@ -2,10 +2,10 @@
 
 #include "Hazel/Core/Base.h"
 
-//Ö¡»º³å(¸öÈËÀí½â)
-//1. ¿ÉÒÔ½«OpenGLäÖÈ¾µÄ³¡¾°·ÅÔÚÕâ¸öÖ¡»º³åÖÐ
-//2. È»ºó¿ÉÒÔ°ÑÕâ¸öÖ¡»º³åµ±×öÊÇÑÕÉ«»òÕßÎÆÀí²ÉÑùÇø£¨È¡¾öÓÚÖ¡»º³å¸½¼ÓµÄ»º³å¸½¼þÀàÐÍ£©
-//3. ÔÚ±ð´¦(Imgui)°ÑÕâ¸öÖ¡»º³åµ±×öÑÕÉ«ÎÆÀíäÖÈ¾³öÀ´£¬¾ÍÔÚImGui½çÃæÉÏÏÔÊ¾ÁËÔ­±¾Ó¦ÏÔÊ¾ÔÚÆÁÄ»ÉÏµÄ³¡¾°
+//å¸§ç¼“å†²(ä¸ªäººç†è§£)
+//1. å¯ä»¥å°†OpenGLæ¸²æŸ“çš„åœºæ™¯æ”¾åœ¨è¿™ä¸ªå¸§ç¼“å†²ä¸­
+//2. ç„¶åŽå¯ä»¥æŠŠè¿™ä¸ªå¸§ç¼“å†²å½“åšæ˜¯é¢œè‰²æˆ–è€…çº¹ç†é‡‡æ ·åŒºï¼ˆå–å†³äºŽå¸§ç¼“å†²é™„åŠ çš„ç¼“å†²é™„ä»¶ç±»åž‹ï¼‰
+//3. åœ¨åˆ«å¤„(Imgui)æŠŠè¿™ä¸ªå¸§ç¼“å†²å½“åšé¢œè‰²çº¹ç†æ¸²æŸ“å‡ºæ¥ï¼Œå°±åœ¨ImGuiç•Œé¢ä¸Šæ˜¾ç¤ºäº†åŽŸæœ¬åº”æ˜¾ç¤ºåœ¨å±å¹•ä¸Šçš„åœºæ™¯
 
 namespace Hazel {
 	struct FramebufferSpecification
@@ -21,6 +21,7 @@ namespace Hazel {
 	class Framebuffer
 	{
 	public:
+		virtual ~Framebuffer() = default;
 		virtual void Bind() = 0;
 		virtual void Unbind() = 0;
 
