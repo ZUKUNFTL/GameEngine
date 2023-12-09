@@ -109,7 +109,6 @@ namespace Hazel {
 	   */
 		if (m_BlockEvents)
 		{
-			HZ_WARN("event: {0}", e.GetName());
 			if (e.GetEventType() == EventType::MouseMoved) {
 				return;
 			}

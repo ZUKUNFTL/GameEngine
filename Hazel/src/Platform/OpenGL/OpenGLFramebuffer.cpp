@@ -4,6 +4,8 @@
 #include "glad/glad.h"
 namespace Hazel {
 
+	static const uint32_t s_MaxFramebufferSize = 8192;
+
 	OpenGLFramebuffer::OpenGLFramebuffer(const FramebufferSpecification& spec)
 		:m_Specification(spec)
 	{
@@ -69,6 +71,15 @@ namespace Hazel {
 
 	void OpenGLFramebuffer::Resize(uint32_t width, uint32_t height)
 	{
+		//todo:
+		//当窗口最小化，imgui的viewportsize会是负值传入给帧缓冲重新设置大小
+		//但是帧缓冲的大小参数是无符号，所以会转换为一个很大的无符号整数
+		//帧缓冲的大小就会过大，导致重新最大化窗口时，摄像机投影会变形（摄像机的宽高比与帧缓冲的大小不匹配）
+		//判断帧缓冲大小如果过大就不重置，这里仍然没有解决这个问题，摄像机投影会变形问题（因为窗口最小化事件与窗口重新调整大小不是同一个事件）
+		if (width == 0 || height == 0 || width > s_MaxFramebufferSize || height > s_MaxFramebufferSize) {
+			HZ_CORE_ERROR("Attempt to resize frambuffer to {0} {1}", width, height);
+			return;
+		}
 		//设置缓冲帧的大小
 		m_Specification.Width = width;
 		m_Specification.Height = height;
