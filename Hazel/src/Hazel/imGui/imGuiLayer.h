@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Hazel/Core/Layer.h"
 
 #include "Hazel/Events/MouseEvent.h"
