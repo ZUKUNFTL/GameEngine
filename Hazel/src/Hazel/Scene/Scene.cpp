@@ -2,6 +2,7 @@
 #include "Scene.h"
 
 #include "Components.h"
+#include "Entity.h"
 
 #include "glm/glm.hpp"
 #include "Hazel/Renderer/Renderer2D.h"
@@ -55,9 +56,15 @@ namespace Hazel {
 		}
 	}
 
-	entt::entity Scene::CreateEntity()
+	Entity Scene::CreateEntity(const std::string& name)
 	{
-		return m_Registry.create();
+		Entity entity = { m_Registry.create(), this };
+		//每个实体都有个平移组件
+		entity.AddComponent<TransformComponent>();
+		//每个实体都有个标签组件
+		auto& tag = entity.AddComponent<TagComponent>();
+		tag.Tag = name.empty() ? "Entity" : name;
+		return entity;
 	}
 
 }
