@@ -2,8 +2,7 @@
 
 #include <glm/glm.hpp>
 
-#include "Hazel/Renderer/Camera.h"
-
+#include "SceneCamera.h"
 namespace Hazel {
 
 	struct TagComponent
@@ -37,13 +36,14 @@ namespace Hazel {
 
 	struct CameraComponent
 	{
-		Hazel::Camera Camera;
+		SceneCamera  Camera;
 		//是否是主摄像机的标志
 		bool Primary = true;// TODO: think about moving to Scene
+		//是否是可变宽高比的相机
+		bool FixedAspectRatio = false;
 
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
-		CameraComponent(const glm::mat4& projection)
-			: Camera(projection) {}
+
 	};
 }
