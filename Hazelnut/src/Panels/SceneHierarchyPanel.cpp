@@ -19,7 +19,6 @@ namespace Hazel {
 
 	void SceneHierarchyPanel::OnImGuiRender()
 	{
-
 		//遍历所有实体
 		ImGui::Begin("Scene Hierarchy");
 		m_Context->m_Registry.each([&](auto entityID) {

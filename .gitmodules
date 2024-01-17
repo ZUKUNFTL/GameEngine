@@ -10,3 +10,6 @@
 [submodule "Hazel/vendor/glm"]
 	path = Hazel/vendor/glm
 	url = https://gitclone.com/github.com/g-truc/glm
+[submodule "Hazel/vendor/yaml-cpp"]
+	path = Hazel/vendor/yaml-cpp
+	url = http://gitclone.com/github.com/thecherno/yaml-cpp
