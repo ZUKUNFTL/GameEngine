@@ -63,6 +63,9 @@ namespace Hazel {
 		//imgui窗口大小
 		glm::vec2 m_ViewportSize = { 0.0f, 0.0f };
 
+		//保存Viewport窗口左上角和右下角距离整个屏幕左上角的位置
+		glm::vec2 m_ViewportBounds[2];
+
 		bool m_ViewportFocused = false, m_ViewportHovered = false;
 
 		// Hierarchy面板

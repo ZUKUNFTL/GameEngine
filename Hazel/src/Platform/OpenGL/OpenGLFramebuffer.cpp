@@ -27,16 +27,16 @@ namespace Hazel {
 		}
 
 		//附加颜色纹理到缓冲帧
-		static void AttachColorTexture(uint32_t id, int samples, GLenum format, uint32_t width, uint32_t height, int index)
+		static void AttachColorTexture(uint32_t id, int samples, GLenum internalFormat, GLenum format, uint32_t width, uint32_t height, int index)
 		{
 			bool multisampled = samples > 1;
 			if (multisampled)
 			{
-				glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, format, width, height, GL_FALSE);
+				glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, internalFormat, width, height, GL_FALSE);
 			}
 			else
 			{
-				glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+				glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, nullptr);
 
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -141,8 +141,7 @@ namespace Hazel {
 			// 1.2深度模板缓冲纹理附加到帧缓冲中
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, m_DepthAttachment, 0);
 		*/
-
-		bool multisample = m_Specification.Samples > 1; 
+		bool multisample = m_Specification.Samples > 1;
 
 		//Attachments
 		//颜色缓冲集
@@ -159,16 +158,21 @@ namespace Hazel {
 				switch (m_ColorAttachmentSpecifications[i].TextureFormat)
 				{
 				case FramebufferTextureFormat::RGBA8:
-					Utils::AttachColorTexture(m_ColorAttachments[i], multisample, GL_RGBA8, m_Specification.Width, m_Specification.Height, i);
+					Utils::AttachColorTexture(m_ColorAttachments[i], m_Specification.Samples, GL_RGBA8, GL_RGBA, m_Specification.Width, m_Specification.Height, i);
+					break;
+				//添加整形缓冲区附件
+				case FramebufferTextureFormat::RED_INTEGER:
+					Utils::AttachColorTexture(m_ColorAttachments[i], m_Specification.Samples, GL_R32I, GL_RED_INTEGER, m_Specification.Width, m_Specification.Height, i);
 					break;
 				}
-			}	
+			}
 		}
 
 		//深度缓冲集
 		if (m_DepthAttachmentSpecification.TextureFormat != FramebufferTextureFormat::None)
 		{
 			Utils::CreateTextures(multisample, &m_DepthAttachment, 1);
+			Utils::BindTexture(multisample, m_DepthAttachment);
 			switch (m_DepthAttachmentSpecification.TextureFormat)
 			{
 			case FramebufferTextureFormat::DEPTH24STENCIL8:
@@ -225,6 +229,17 @@ namespace Hazel {
 		m_Specification.Height = height;
 		//需要重新生成帧缓冲来调整
 		Invalidate();
+	}
+
+	int OpenGLFramebuffer::ReadPixel(uint32_t attachmentIndex, int x, int y)
+	{
+		HZ_CORE_ASSERT(attachmentIndex < m_ColorAttachments.size(),"size can't be bigger than 4!");
+
+		// 关键函数glReadBuffer+glReadPixels
+		glReadBuffer(GL_COLOR_ATTACHMENT0 + attachmentIndex);//attachmentIndex为1时，读取第二个缓冲区
+		int pixelData = -1;
+		glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);// 读取第二个缓冲区中的xy位置的缓冲区值
+		return pixelData;
 	}
 
 }
