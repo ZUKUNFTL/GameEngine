@@ -88,7 +88,7 @@ namespace Hazel {
 			case FramebufferTextureFormat::RED_INTEGER: return GL_RED_INTEGER;
 			}
 
-			//HZ_CORE_ASSERT(false);
+			HZ_CORE_ASSERT(false);
 			return 0;
 		}
 
@@ -193,7 +193,7 @@ namespace Hazel {
 
 		if (m_ColorAttachments.size() > 1)
 		{
-			HZ_CORE_ASSERT(m_ColorAttachments.size() <= 4,"size can't bigger than 4!");
+			HZ_CORE_ASSERT(m_ColorAttachments.size() <= 4);
 			// 这里id对应上面，颜色纹理附加到帧缓冲的ID
 			// 只使用两个颜色纹理缓冲区可以不用后面两个
 			GLenum buffers[4]= { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 };
@@ -243,7 +243,7 @@ namespace Hazel {
 
 	int OpenGLFramebuffer::ReadPixel(uint32_t attachmentIndex, int x, int y)
 	{
-		HZ_CORE_ASSERT(attachmentIndex < m_ColorAttachments.size(),"size can't be bigger than 4!");
+		HZ_CORE_ASSERT(attachmentIndex < m_ColorAttachments.size());
 
 		// 关键函数glReadBuffer+glReadPixels
 		glReadBuffer(GL_COLOR_ATTACHMENT0 + attachmentIndex);//attachmentIndex为1时，读取第二个缓冲区
@@ -254,7 +254,7 @@ namespace Hazel {
 
 	void OpenGLFramebuffer::ClearAttachment(uint32_t attachmentIndex, int value)
 	{
-		//HZ_CORE_ASSERT(attachmentIndex < m_ColorAttachments.size());
+		HZ_CORE_ASSERT(attachmentIndex < m_ColorAttachments.size());
 
 		auto& spec = m_ColorAttachmentSpecifications[attachmentIndex];
 		glClearTexImage(m_ColorAttachments[attachmentIndex], 0,
