@@ -43,6 +43,8 @@ namespace Hazel {
 		//主摄像机实体
 		Entity m_CameraEntity;
 		Entity m_SecondCamera;
+		//鼠标放置的实体
+		Entity m_HoveredEntity;
 
 		bool m_PrimaryCamera = true;
 
