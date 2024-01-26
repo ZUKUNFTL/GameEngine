@@ -52,6 +52,11 @@ namespace Hazel {
 		ImGui::End();
 	}
 
+	void SceneHierarchyPanel::SetSelectedEntity(Entity entity)
+	{
+		m_SelectionContext = entity;
+	}
+
 	//将需要的信息写出来
 	void SceneHierarchyPanel::DrawEntityNode(Entity entity)
 	{
