@@ -15,7 +15,7 @@ class ParticleSystem
 public:
 	ParticleSystem(uint32_t maxParticles = 999);
 
-	void OnUpdate(Hazel::TimeStep ts);
+	void OnUpdate(Hazel::Timestep ts);
 	void OnRender(Hazel::OrthographicCamera& camera);
 
 	void Emit(const ParticleProps& particleProps);
