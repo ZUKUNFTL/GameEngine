@@ -1,18 +1,18 @@
 [submodule "Hazel/vendor/GLFW"]
 	path = Hazel/vendor/GLFW
-	url = https://gitclone.com/github.com/ZUKUNFTL/glfw
+	url = https://gitclone.com/github.com/TheCherno/glfw
 [submodule "Hazel/vendor/spdlog"]
 	path = Hazel/vendor/spdlog
-	url = https://gitclone.com/github.com/ZUKUNFTL/spdlog.git
+	url = https://gitclone.com/github.com/gabime/spdlog.git
 [submodule "Hazel/vendor/imgui"]
 	path = Hazel/vendor/imgui
-	url = https://gitclone.com/github.com/ZUKUNFTL/imgui
+	url = https://gitclone.com/github.com/TheCherno/imgui
 [submodule "Hazel/vendor/glm"]
 	path = Hazel/vendor/glm
-	url = https://gitclone.com/github.com/ZUKUNFTL/glm
-[submodule "Hazel/vendor/yaml-cpp"]
-	path = Hazel/vendor/yaml-cpp
-	url = http://gitclone.com/github.com/ZUKUNFTL/yaml-cpp
+	url = https://gitclone.com/github.com/g-truc/glm
 [submodule "Hazel/vendor/ImGuizmo"]
 	path = Hazel/vendor/ImGuizmo
-	url = https://gitclone.com/github.com/ZUKUNFTL/ImGuizmo
+	url = https://gitclone.com/github.com/TheCherno/ImGuizmo
+[submodule "Hazel/vendor/yaml-cpp"]
+	path = Hazel/vendor/yaml-cpp
+	url = https://gitclone.com/github.com/thecherno/yaml-cpp
