@@ -25,6 +25,7 @@ IncludeDir["glm"] = "Hazel/vendor/glm"
 IncludeDir["stb_image"] = "Hazel/vendor/stb_image"
 IncludeDir["entt"] = "Hazel/vendor/entt/include"
 IncludeDir["yaml_cpp"] = "Hazel/vendor/yaml-cpp/include"
+IncludeDir["Box2d"] = "Hazel/vendor/box2d/include"
 IncludeDir["ImGuizmo"] = "%{wks.location}/Hazel/vendor/ImGuizmo"
 IncludeDir["shaderc"] = "%{wks.location}/Hazel/vendor/shaderc/include"
 IncludeDir["SPIRV_Cross"] = "%{wks.location}/Hazel/vendor/SPIRV-Cross"
@@ -54,6 +55,7 @@ group "Dependencies"
 	include "Hazel/vendor/Glad"
 	include "Hazel/vendor/imgui"
 	include "Hazel/vendor/yaml-cpp"
+	include "Hazel/vendor/box2d"
 group ""
 
 --location代表我们相对路径的当前目录
@@ -110,7 +112,8 @@ project "Hazel"
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.yaml_cpp}",
 		"%{IncludeDir.ImGuizmo}",
-		"%{IncludeDir.VulkanSDK}"
+		"%{IncludeDir.VulkanSDK}",
+		"%{IncludeDir.Box2d}"
 	}
 		
 	--静态链接
@@ -120,7 +123,8 @@ project "Hazel"
 		"Glad",
 		"ImGui",
 		"yaml-cpp",
-		"opengl32.lib"
+		"opengl32.lib",
+		"Box2d"
 	}
 
 	filter "files:Hazel/vendor/ImGuizmo/**.cpp"
