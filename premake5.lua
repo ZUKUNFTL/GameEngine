@@ -110,7 +110,6 @@ project "Hazel"
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.yaml_cpp}",
 		"%{IncludeDir.ImGuizmo}",
-		"%{IncludeDir.ImGuizmo}",
 		"%{IncludeDir.VulkanSDK}"
 	}
 		
@@ -123,8 +122,8 @@ project "Hazel"
 		"yaml-cpp",
 		"opengl32.lib"
 	}
-	
-	filter "files:{prj.name}/vendor/ImGuizmo/**.cpp"
+
+	filter "files:Hazel/vendor/ImGuizmo/**.cpp"
 	flags { "NoPCH" }
 
 	--filter说明它只适用于所选的系统
