@@ -33,7 +33,7 @@ ParticleSystem::ParticleSystem(uint32_t maxParticles)
 	m_ParticlePool.resize(maxParticles);
 }
 
-void ParticleSystem::OnUpdate(Hazel::TimeStep ts)
+void ParticleSystem::OnUpdate(Hazel::Timestep ts)
 {
 	for (auto& particle : m_ParticlePool)
 	{
