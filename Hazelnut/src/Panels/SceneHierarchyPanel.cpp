@@ -21,27 +21,29 @@ namespace Hazel {
 
 	void SceneHierarchyPanel::OnImGuiRender()
 	{
-		//遍历所有实体
 		ImGui::Begin("Scene Hierarchy");
-		m_Context->m_Registry.each([&](auto entityID) {
-			// ImGui显示场景的实体
-			Entity entity{ entityID, m_Context.get() };
-			DrawEntityNode(entity);
-		});
-		// 优化：若当前在hierarchy面板并且没点击到实体，属性面板清空
-		if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
-			m_SelectionContext = {};
+		if (m_Context) {
+			//遍历所有实体
+			m_Context->m_Registry.each([&](auto entityID) {
+				// ImGui显示场景的实体
+				Entity entity{ entityID, m_Context.get() };
+				DrawEntityNode(entity);
+			});
+			// 优化：若当前在hierarchy面板并且没点击到实体，属性面板清空
+			if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
+				m_SelectionContext = {};
 
-		// 右击空白面板-弹出菜单。0是ID 1是右键
-		if (ImGui::BeginPopupContextWindow(0, 1, false))
-		{
-			if (ImGui::MenuItem("Create Empty Entity"))
-				m_Context->CreateEntity("Empty Entity");
+			// 右击空白面板-弹出菜单。0是ID 1是右键
+			if (ImGui::BeginPopupContextWindow(0, 1, false))
+			{
+				if (ImGui::MenuItem("Create Empty Entity"))
+					m_Context->CreateEntity("Empty Entity");
 
-			ImGui::EndPopup();
+				ImGui::EndPopup();
+			}
 		}
+		ImGui::End();	
 
-		ImGui::End();
 		// 新添加一个ImGui面板
 		ImGui::Begin("Properties");
 		// 判断当前点击的实体是否存在
@@ -398,7 +400,7 @@ namespace Hazel {
 		DrawComponent<BoxCollider2DComponent>("Box Collider 2D", entity, [](auto& component)
 			{
 				ImGui::DragFloat2("Offset", glm::value_ptr(component.Offset));
-				ImGui::DragFloat2("Size", glm::value_ptr(component.Offset));
+				ImGui::DragFloat2("Size", glm::value_ptr(component.Size));
 				ImGui::DragFloat("Density", &component.Density, 0.01f, 0.0f, 1.0f);
 				ImGui::DragFloat("Friction", &component.Friction, 0.01f, 0.0f, 1.0f);
 				ImGui::DragFloat("Restitution", &component.Restitution, 0.01f, 0.0f, 1.0f);
