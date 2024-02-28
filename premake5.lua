@@ -24,6 +24,7 @@ IncludeDir["ImGui"] = "Hazel/vendor/imgui"
 IncludeDir["glm"] = "Hazel/vendor/glm"
 IncludeDir["stb_image"] = "Hazel/vendor/stb_image"
 IncludeDir["entt"] = "Hazel/vendor/entt/include"
+IncludeDir["mono"] = "%{wks.location}/Hazel/vendor/mono/include"
 IncludeDir["yaml_cpp"] = "Hazel/vendor/yaml-cpp/include"
 IncludeDir["Box2d"] = "Hazel/vendor/box2d/include"
 IncludeDir["ImGuizmo"] = "%{wks.location}/Hazel/vendor/ImGuizmo"
@@ -34,8 +35,11 @@ IncludeDir["VulkanSDK"] = "%{VULKAN_SDK}/Include"
 LibraryDir = {}
 
 LibraryDir["VulkanSDK"] = "%{VULKAN_SDK}/Lib"
+LibraryDir["mono"] = "%{wks.location}/Hazel/vendor/mono/lib/%{cfg.buildcfg}"
 
 Library = {}
+Library["mono"] = "%{LibraryDir.mono}/libmono-static-sgen.lib"
+
 Library["Vulkan"] = "%{LibraryDir.VulkanSDK}/vulkan-1.lib"
 Library["VulkanUtils"] = "%{LibraryDir.VulkanSDK}/VkLayer_utils.lib"
 
@@ -47,6 +51,12 @@ Library["SPIRV_Tools_Debug"] = "%{LibraryDir.VulkanSDK}/SPIRV-Toolsd.lib"
 Library["ShaderC_Release"] = "%{LibraryDir.VulkanSDK}/shaderc_shared.lib"
 Library["SPIRV_Cross_Release"] = "%{LibraryDir.VulkanSDK}/spirv-cross-core.lib"
 Library["SPIRV_Cross_GLSL_Release"] = "%{LibraryDir.VulkanSDK}/spirv-cross-glsl.lib"
+
+-- Windows
+Library["WinSock"] = "Ws2_32.lib"
+Library["WinMM"] = "Winmm.lib"
+Library["WinVersion"] = "Version.lib"
+Library["BCrypt"] = "Bcrypt.lib"
 
 group "Dependencies"
 	--添加了glfw的premake文件
@@ -109,6 +119,7 @@ project "Hazel"
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}",
 		"%{IncludeDir.entt}",
+		"%{IncludeDir.mono}",
 		"%{IncludeDir.yaml_cpp}",
 		"%{IncludeDir.ImGuizmo}",
 		"%{IncludeDir.VulkanSDK}",
@@ -123,7 +134,8 @@ project "Hazel"
 		"ImGui",
 		"yaml-cpp",
 		"opengl32.lib",
-		"Box2d"
+		"Box2d",
+		"%{Library.mono}"
 	}
 
 	filter "files:Hazel/vendor/ImGuizmo/**.cpp"
@@ -143,6 +155,15 @@ project "Hazel"
 			--这个宏代表我们不包括任何打开的GLFW头文件，知道你引入opengl
 			"GLFW_INCLUDE_NONE"
 		}
+
+		links
+		{
+			"%{Library.WinSock}",
+			"%{Library.WinMM}",
+			"%{Library.WinVersion}",
+			"%{Library.BCrypt}",
+		}
+
 	filter "configurations:Debug"
 		defines "HZ_DEBUG"
 		runtime "Debug"
@@ -288,3 +309,31 @@ project "Hazelnut"
 		defines "HZ_DIST"
 		runtime "Release"
 		optimize "on"
+
+project "Hazel-ScriptCore"
+	location "Hazel-ScriptCore"
+	kind "SharedLib"
+	language "C#"-- C#项目
+	dotnetframework "4.7.2"
+
+	-- 生成的目标位置
+	targetdir ("%{wks.location}/Hazelnut/Resources/Scripts")
+	objdir ("%{wks.location}/Hazelnut/Resources/Scripts/Intermediates")
+
+	files 
+	{
+		"%{prj.name}/Source/**.cs",
+		"%{prj.name}/Properties/**.cs"
+	}
+
+	filter "configurations:Debug"
+		optimize "Off"
+		symbols "Default"
+
+	filter "configurations:Release"
+		optimize "On"
+		symbols "Default"
+
+	filter "configurations:Dist"
+		optimize "Full"
+		symbols "Off"
