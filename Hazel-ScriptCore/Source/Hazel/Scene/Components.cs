@@ -29,7 +29,7 @@ namespace Hazel
 
     public class Rigidbody2DComponent : Component
     {
-
+        //实体添加物理冲力
         public void ApplyLinearImpulse(Vector2 impulse, Vector2 worldPosition, bool wake)
         {
             InternalCalls.Rigidbody2DComponent_ApplyLinearImpulse(Entity.ID, ref impulse, ref worldPosition, wake);
