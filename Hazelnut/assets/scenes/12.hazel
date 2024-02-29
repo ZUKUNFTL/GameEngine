@@ -1,0 +1,62 @@
+Scene: Untitled
+Entities:
+  - Entity: 1567784659580318662
+    TagComponent:
+      Tag: Empty Entity
+    TransformComponent:
+      Translation: [-0.038937822, -1.57837272, 0]
+      Rotation: [0, 0, 7.75037492e-08]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+      TilingFactor: 1
+    Rigidbody2DComponent:
+      BodyType: Dynamic
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Density: 1
+      Friction: 0.5
+      Restitution: 0
+      RestitutionThreshold: 0.5
+    ScriptComponent:
+      ClassName: Sandbox.Player
+  - Entity: 14602324930200937436
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 1
+        PerspectiveFOV: 0.785398185
+        PerspectiveNear: 0.00999999978
+        PerspectiveFar: 1000
+        OrthographicSize: 10
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: true
+      FixedAspectRatio: false
+  - Entity: 13188981034808736746
+    TagComponent:
+      Tag: Empty Entity
+    TransformComponent:
+      Translation: [-0.00999796391, -2.59337211, 0]
+      Rotation: [0, 0, 0]
+      Scale: [6.80530739, 1, 1]
+    SpriteRendererComponent:
+      Color: [0.907335877, 0.304780781, 0.304780781, 1]
+      TilingFactor: 1
+    Rigidbody2DComponent:
+      BodyType: Static
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Density: 1
+      Friction: 0.5
+      Restitution: 0
+      RestitutionThreshold: 0.5
