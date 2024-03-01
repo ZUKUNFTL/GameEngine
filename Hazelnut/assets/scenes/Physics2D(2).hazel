@@ -44,8 +44,8 @@ Entities:
     TagComponent:
       Tag: Block
     TransformComponent:
-      Translation: [-0.560881913, 0.980064034, 0.0225147791]
-      Rotation: [0, 0, 0]
+      Translation: [-0.0997191817, -1.11852753, 0.0225147791]
+      Rotation: [0, 0, -0.560083091]
       Scale: [0.361159712, 0.375572056, 0.848135769]
     SpriteRendererComponent:
       Color: [0.277992249, 0.277989477, 0.277989477, 1]
@@ -105,11 +105,9 @@ Entities:
     TagComponent:
       Tag: Sprite
     TransformComponent:
-      Translation: [0.0495706201, 0.271503896, 0.0225147791]
-      Rotation: [0, 0, -0.235084534]
+      Translation: [-0.429428726, -0.896985054, 0.0225147791]
+      Rotation: [0, 0, -5.35158396]
       Scale: [0.361159712, 0.375572056, 0.848135769]
-    ScriptComponent:
-      ClassName: Sandbox.Player
     SpriteRendererComponent:
       Color: [1, 1, 1, 1]
       TilingFactor: 1
@@ -123,3 +121,5 @@ Entities:
       Friction: 0.100000001
       Restitution: 0.819999993
       RestitutionThreshold: 0.5
+    ScriptComponent:
+      ClassName: Sandbox.Player

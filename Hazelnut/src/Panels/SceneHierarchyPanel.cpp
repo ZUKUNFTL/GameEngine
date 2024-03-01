@@ -327,7 +327,7 @@ namespace Hazel {
 				}
 			});
 		//c#脚本组件
-		DrawComponent<ScriptComponent>("Script", entity, [](auto& component)
+		DrawComponent<ScriptComponent>("Script", entity, [entity](auto& component) mutable
 			{
 				bool scriptClassExists = ScriptEngine::EntityClassExists(component.ClassName);
 
@@ -339,6 +339,26 @@ namespace Hazel {
 
 				if (ImGui::InputText("Class", buffer, sizeof(buffer)))
 					component.ClassName = buffer;
+
+				// Fields
+				Ref<ScriptInstance> scriptInstance = ScriptEngine::GetEntityScriptInstance(entity.GetUUID());
+				if (scriptInstance)
+				{
+					// 读取map中的属性
+					const auto& fields = scriptInstance->GetScriptClass()->GetFields();
+					// 获取保存的属性名称
+					for (const auto& [name, field] : fields)
+					{
+						if (field.Type == ScriptFieldType::Float)
+						{
+							float data = scriptInstance->GetFieldValue<float>(name);// 下一步有函数定义：获取属性值
+							if (ImGui::DragFloat(name.c_str(), &data))
+							{
+								scriptInstance->SetFieldValue(name, data);// 下一步有函数定义：设置属性值
+							}
+						}
+					}
+				}
 
 				if (!scriptClassExists)
 					ImGui::PopStyleColor();
