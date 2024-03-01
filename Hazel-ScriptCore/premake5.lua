@@ -4,8 +4,8 @@
 	dotnetframework "4.7.2"
 
 	-- 生成的目标位置
-	targetdir ("%{wks.location}/Hazelnut/Resources/Scripts")
-	objdir ("%{wks.location}/Hazelnut/Resources/Scripts/Intermediates")
+	targetdir ("../Hazelnut/Resources/Scripts")
+	objdir ("../Hazelnut/Resources/Scripts/Intermediates")
 
 	files 
 	{
