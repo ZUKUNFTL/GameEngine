@@ -1,5 +1,8 @@
+include "./vendor/premake/premake_customization/solution_items.lua"
+include "Dependencies.lua"
+
 workspace "Hazel"
-	architecture"x64"
+	architecture"x86_64"
 	--启动项
 	startproject "Hazelnut"
 
@@ -11,55 +14,22 @@ workspace "Hazel"
 		"Dist"
 	} 
 
+	solution_items
+	{
+		".editorconfig"
+	}
+
+	flags
+	{
+		"MultiProcessorCompile"
+	}
+
 --buildcfg代表我们的是发布还是调试，system代表我们的系统是mac还是windows，archittecture代表我们是x64还是32的
 --定义输出文件夹名称：Debug-windows-x86_64
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
-VULKAN_SDK = os.getenv("VULKAN_SDK")
---Includir后期会加入多个路径因此我们用{}来表示。
-IncludeDir = {}
-IncludeDir["GLFW"] = "Hazel/vendor/GLFW/include"
-IncludeDir["Glad"] = "Hazel/vendor/Glad/include"
-IncludeDir["ImGui"] = "Hazel/vendor/imgui"
-IncludeDir["glm"] = "Hazel/vendor/glm"
-IncludeDir["stb_image"] = "Hazel/vendor/stb_image"
-IncludeDir["entt"] = "Hazel/vendor/entt/include"
-IncludeDir["mono"] = "%{wks.location}/Hazel/vendor/mono/include"
-IncludeDir["yaml_cpp"] = "Hazel/vendor/yaml-cpp/include"
-IncludeDir["Box2d"] = "Hazel/vendor/box2d/include"
-IncludeDir["ImGuizmo"] = "%{wks.location}/Hazel/vendor/ImGuizmo"
-IncludeDir["shaderc"] = "%{wks.location}/Hazel/vendor/shaderc/include"
-IncludeDir["SPIRV_Cross"] = "%{wks.location}/Hazel/vendor/SPIRV-Cross"
-IncludeDir["VulkanSDK"] = "%{VULKAN_SDK}/Include"
-
-LibraryDir = {}
-
-LibraryDir["VulkanSDK"] = "%{VULKAN_SDK}/Lib"
-LibraryDir["mono"] = "%{wks.location}/Hazel/vendor/mono/lib/%{cfg.buildcfg}"
-
-Library = {}
-Library["mono"] = "%{LibraryDir.mono}/libmono-static-sgen.lib"
-
-Library["Vulkan"] = "%{LibraryDir.VulkanSDK}/vulkan-1.lib"
-Library["VulkanUtils"] = "%{LibraryDir.VulkanSDK}/VkLayer_utils.lib"
-
-Library["ShaderC_Debug"] = "%{LibraryDir.VulkanSDK}/shaderc_sharedd.lib"
-Library["SPIRV_Cross_Debug"] = "%{LibraryDir.VulkanSDK}/spirv-cross-cored.lib"
-Library["SPIRV_Cross_GLSL_Debug"] = "%{LibraryDir.VulkanSDK}/spirv-cross-glsld.lib"
-Library["SPIRV_Tools_Debug"] = "%{LibraryDir.VulkanSDK}/SPIRV-Toolsd.lib"
-
-Library["ShaderC_Release"] = "%{LibraryDir.VulkanSDK}/shaderc_shared.lib"
-Library["SPIRV_Cross_Release"] = "%{LibraryDir.VulkanSDK}/spirv-cross-core.lib"
-Library["SPIRV_Cross_GLSL_Release"] = "%{LibraryDir.VulkanSDK}/spirv-cross-glsl.lib"
-
--- Windows
-Library["WinSock"] = "Ws2_32.lib"
-Library["WinMM"] = "Winmm.lib"
-Library["WinVersion"] = "Version.lib"
-Library["BCrypt"] = "Bcrypt.lib"
-
 group "Dependencies"
-	--添加了glfw的premake文件
+	include "vendor/premake"
 	include "Hazel/vendor/GLFW"
 	include "Hazel/vendor/Glad"
 	include "Hazel/vendor/imgui"
@@ -67,273 +37,15 @@ group "Dependencies"
 	include "Hazel/vendor/box2d"
 group ""
 
---location代表我们相对路径的当前目录
---shadredlib代表我们是动态库
-project "Hazel"
-	location "Hazel"
-	kind "StaticLib"
-	language "C++"
-	cppdialect "C++17"
-	--staticruntime:on代表着当我们构建可执行文件时，它会链接到它自己的运行时库。
-	--而我们在动态库中将它关闭的原因是动态链接dll文件时，dll文件需要它运行时的库，因为dll文件就像最终产品一样。
-	--这因为如此，我们静态链接，我们每个dll都有不同版本的库，这是个大问题。
-	staticruntime "off"
+group "Core"
+	include "Hazel"
+	include "Hazel-ScriptCore"
+group ""
 
-	--targetdir 二进制的输出文件夹目录，等于我们把所有东西都放在bin/debug-windows-x64/Hazel
-	--objdir 中间文件的输出文件夹目录
-	targetdir("bin/" .. outputdir .. "/%{prj.name}")
-	objdir("bin-int/" .. outputdir .. "/%{prj.name}")
-	
-	--pchsource对于vs来说是必须的尽管对我们来说不需要，在其他平台上，它会被忽略
-	pchheader "hzpch.h"
-	pchsource "Hazel/src/hzpch.cpp"
+group "Tools"
+	include "Hazelnut"
+group ""
 
-	--递归读取所有的cpp和h文件
-	files
-	{
-		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp",
-		"%{prj.name}/vendor/glm/glm/**.hpp",
-		"%{prj.name}/vendor/glm/glm/**.inl",
-		"%{prj.name}/vendor/stb_image/**.h",
-		"%{prj.name}/vendor/stb_image/**.cpp",
-
-		"%{prj.name}/vendor/ImGuizmo/ImGuizmo.h",
-		"%{prj.name}/vendor/ImGuizmo/ImGuizmo.cpp"
-	}
-
-	defines
-	{
-		"_CRT_SECURE_NO_WARNINGS"
-	}
-
-	--包含头文件路径
-	includedirs
-	{
-		"%{prj.name}/src",
-		"%{prj.name}/vendor/spdlog/include",
-		--添加glfw的头文件 
-		"%{IncludeDir.GLFW}",
-		"%{IncludeDir.Glad}",
-		"%{IncludeDir.ImGui}",
-		"%{IncludeDir.glm}",
-		"%{IncludeDir.stb_image}",
-		"%{IncludeDir.entt}",
-		"%{IncludeDir.mono}",
-		"%{IncludeDir.yaml_cpp}",
-		"%{IncludeDir.ImGuizmo}",
-		"%{IncludeDir.VulkanSDK}",
-		"%{IncludeDir.Box2d}"
-	}
-		
-	--静态链接
-	links 
-	{ 
-		"GLFW",
-		"Glad",
-		"ImGui",
-		"yaml-cpp",
-		"opengl32.lib",
-		"Box2d",
-		"%{Library.mono}"
-	}
-
-	filter "files:Hazel/vendor/ImGuizmo/**.cpp"
-	flags { "NoPCH" }
-
-	--filter说明它只适用于所选的系统
-	--staticruntim这和静态库链接相关
-	filter "system:windows"
-		systemversion "latest"
-		--定义宏
-		defines
-		{
-			"HZ_PLATFORM_WINDOWS",
-			"HZ_BUILD_DLL",
-			"IMGUI_API=__declspec(dllexport)",
-			--"HZ_ENABLE_ASSERTS",
-			--这个宏代表我们不包括任何打开的GLFW头文件，知道你引入opengl
-			"GLFW_INCLUDE_NONE"
-		}
-
-		links
-		{
-			"%{Library.WinSock}",
-			"%{Library.WinMM}",
-			"%{Library.WinVersion}",
-			"%{Library.BCrypt}",
-		}
-
-	filter "configurations:Debug"
-		defines "HZ_DEBUG"
-		runtime "Debug"
-		--symbols:on代表debug版本
-		symbols "on"
-
-		links
-		{
-			"%{Library.ShaderC_Debug}",
-			"%{Library.SPIRV_Cross_Debug}",
-			"%{Library.SPIRV_Cross_GLSL_Debug}"
-		}
-
-	filter "configurations:Release"
-		defines "HZ_RELEASE"
-		runtime "Release"
-		--optimize:on代表release版本
-		optimize "on"
-
-		links
-		{
-			"%{Library.ShaderC_Release}",
-			"%{Library.SPIRV_Cross_Release}",
-			"%{Library.SPIRV_Cross_GLSL_Release}"
-		}
-
-	filter "configurations:Dist"
-		defines "HZ_DIST"
-		runtime "Release"
-		optimize "on"
-
-		links
-		{
-			"%{Library.ShaderC_Release}",
-			"%{Library.SPIRV_Cross_Release}",
-			"%{Library.SPIRV_Cross_GLSL_Release}"
-		}
-
-project "Sandbox"
-	location "Sandbox"
-	kind "ConsoleApp"
-	language "C++"
-	cppdialect "C++17"
-	staticruntime "off"
-
-	targetdir("bin/" .. outputdir .. "/%{prj.name}")
-	objdir("bin-int/" .. outputdir .. "/%{prj.name}")
-
-	files
-	{
-		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
-	}
-	includedirs
-	{
-		"Hazel/vendor/spdlog/include",
-		"Hazel/src",
-		"Hazel/vendor",
-		"%{IncludeDir.glm}",
-		"%{IncludeDir.entt}"
-	}
-
-	--需要链接的项目
-	links
-	{
-		"Hazel"
-	}
-
-	filter "system:windows"
-		systemversion "latest"
-		
-		defines
-		{
-			"HZ_PLATFORM_WINDOWS",
-		}
-
-	filter "configurations:Debug"
-		defines "HZ_DEBUG"
-		runtime "Debug"
-		symbols "on"
-
-	filter "configurations:Release"
-		defines "HZ_RELEASE"
-		runtime "Release"
-		optimize "on"
-
-	filter "configurations:Dist"
-		defines "HZ_DIST"
-		runtime "Release"
-		optimize "on"
-
-
-project "Hazelnut"
-	location "Hazelnut"
-	kind "ConsoleApp"
-	language "C++"
-	cppdialect "C++17"
-	staticruntime "off"
-
-	targetdir("bin/" .. outputdir .. "/%{prj.name}")
-	objdir("bin-int/" .. outputdir .. "/%{prj.name}")
-
-	files
-	{
-		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
-	}
-	includedirs
-	{
-		"Hazel/vendor/spdlog/include",
-		"Hazel/src",
-		"Hazel/vendor",
-		"%{IncludeDir.glm}",
-		"%{IncludeDir.entt}",
-		"%{IncludeDir.ImGuizmo}"
-	}
-
-	--需要链接的项目
-	links
-	{
-		"Hazel"
-	}
-
-	filter "system:windows"
-		systemversion "latest"
-		
-		defines
-		{
-			"HZ_PLATFORM_WINDOWS",
-		}
-
-	filter "configurations:Debug"
-		defines "HZ_DEBUG"
-		runtime "Debug"
-		symbols "on"
-
-	filter "configurations:Release"
-		defines "HZ_RELEASE"
-		runtime "Release"
-		optimize "on"
-
-	filter "configurations:Dist"
-		defines "HZ_DIST"
-		runtime "Release"
-		optimize "on"
-
-project "Hazel-ScriptCore"
-	location "Hazel-ScriptCore"
-	kind "SharedLib"
-	language "C#"-- C#项目
-	dotnetframework "4.7.2"
-
-	-- 生成的目标位置
-	targetdir ("%{wks.location}/Hazelnut/Resources/Scripts")
-	objdir ("%{wks.location}/Hazelnut/Resources/Scripts/Intermediates")
-
-	files 
-	{
-		"%{prj.name}/Source/**.cs",
-		"%{prj.name}/Properties/**.cs"
-	}
-
-	filter "configurations:Debug"
-		optimize "Off"
-		symbols "Default"
-
-	filter "configurations:Release"
-		optimize "On"
-		symbols "Default"
-
-	filter "configurations:Dist"
-		optimize "Full"
-		symbols "Off"
+group "Misc"
+	include "Sandbox"
+group ""
