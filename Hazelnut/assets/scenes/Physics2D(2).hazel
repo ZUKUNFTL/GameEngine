@@ -1,54 +1,14 @@
 Scene: Untitled
 Entities:
-  - Entity: 16672940118998907085
+  - Entity: 8254140920860137284
     TagComponent:
-      Tag: Floor
+      Tag: Sprite
     TransformComponent:
-      Translation: [-0.883175671, -1.09447932, 0]
-      Rotation: [0, 0, -0.638996005]
-      Scale: [6.74196768, 0.46067813, 1]
+      Translation: [0.258886784, 0.716642797, 0.0225147791]
+      Rotation: [0, 0, 0.931601524]
+      Scale: [0.361159682, 0.375572056, 0.848135769]
     SpriteRendererComponent:
-      Color: [0.949806929, 0.455301404, 0.0660097376, 1]
-      TilingFactor: 1
-    Rigidbody2DComponent:
-      BodyType: Static
-      FixedRotation: false
-    BoxCollider2DComponent:
-      Offset: [0, 0]
-      Size: [0.5, 0.5]
-      Density: 1
-      Friction: 0.5
-      Restitution: 0
-      RestitutionThreshold: 0.5
-  - Entity: 4793924497264767156
-    TagComponent:
-      Tag: Camera
-    TransformComponent:
-      Translation: [0, 0, 4.99711323]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    CameraComponent:
-      Camera:
-        ProjectionType: 0
-        PerspectiveFOV: 0.785398185
-        PerspectiveNear: 0.00999999978
-        PerspectiveFar: 1000
-        OrthographicSize: 10
-        OrthographicNear: -1
-        OrthographicFar: 1
-      Primary: true
-      FixedAspectRatio: false
-    ScriptComponent:
-      ClassName: Sandbox.Camera
-  - Entity: 15045535320033348975
-    TagComponent:
-      Tag: Block
-    TransformComponent:
-      Translation: [-0.0997191817, -1.11852753, 0.0225147791]
-      Rotation: [0, 0, -0.560083091]
-      Scale: [0.361159712, 0.375572056, 0.848135769]
-    SpriteRendererComponent:
-      Color: [0.277992249, 0.277989477, 0.277989477, 1]
+      Color: [1, 1, 1, 1]
       TilingFactor: 1
     Rigidbody2DComponent:
       BodyType: Dynamic
@@ -60,26 +20,8 @@ Entities:
       Friction: 0.100000001
       Restitution: 0.819999993
       RestitutionThreshold: 0.5
-  - Entity: 5134011587522944740
-    TagComponent:
-      Tag: Floor
-    TransformComponent:
-      Translation: [2.3506453, -1.84539962, 0]
-      Rotation: [0, 0, 0.603692532]
-      Scale: [6.74196959, 0.46067816, 1]
-    SpriteRendererComponent:
-      Color: [0.949806929, 0.455301404, 0.0660097376, 1]
-      TilingFactor: 1
-    Rigidbody2DComponent:
-      BodyType: Static
-      FixedRotation: false
-    BoxCollider2DComponent:
-      Offset: [0, 0]
-      Size: [0.5, 0.5]
-      Density: 1
-      Friction: 0.5
-      Restitution: 0
-      RestitutionThreshold: 0.5
+    ScriptComponent:
+      ClassName: Sandbox.Player
   - Entity: 8804479042241551551
     TagComponent:
       Tag: Circle
@@ -101,15 +43,35 @@ Entities:
       Friction: 0.5
       Restitution: 0
       RestitutionThreshold: 0.5
-  - Entity: 8254140920860137284
+  - Entity: 5134011587522944740
     TagComponent:
-      Tag: Sprite
+      Tag: Floor
     TransformComponent:
-      Translation: [-0.429428726, -0.896985054, 0.0225147791]
-      Rotation: [0, 0, -5.35158396]
+      Translation: [2.3506453, -1.84539962, 0]
+      Rotation: [0, 0, 0.603692532]
+      Scale: [6.74196959, 0.46067816, 1]
+    SpriteRendererComponent:
+      Color: [0.949806929, 0.455301404, 0.0660097376, 1]
+      TilingFactor: 1
+    Rigidbody2DComponent:
+      BodyType: Static
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Density: 1
+      Friction: 0.5
+      Restitution: 0
+      RestitutionThreshold: 0.5
+  - Entity: 15045535320033348975
+    TagComponent:
+      Tag: Block
+    TransformComponent:
+      Translation: [-0.608474195, 0.67651391, 0.0225147791]
+      Rotation: [0, 0, -0.56008321]
       Scale: [0.361159712, 0.375572056, 0.848135769]
     SpriteRendererComponent:
-      Color: [1, 1, 1, 1]
+      Color: [0.277992249, 0.277989477, 0.277989477, 1]
       TilingFactor: 1
     Rigidbody2DComponent:
       BodyType: Dynamic
@@ -121,5 +83,43 @@ Entities:
       Friction: 0.100000001
       Restitution: 0.819999993
       RestitutionThreshold: 0.5
+  - Entity: 4793924497264767156
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Translation: [0, 0, 4.99711323]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 0
+        PerspectiveFOV: 0.785398185
+        PerspectiveNear: 0.00999999978
+        PerspectiveFar: 1000
+        OrthographicSize: 10
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: true
+      FixedAspectRatio: false
     ScriptComponent:
-      ClassName: Sandbox.Player
+      ClassName: Sandbox.Camera
+  - Entity: 16672940118998907085
+    TagComponent:
+      Tag: Floor
+    TransformComponent:
+      Translation: [-0.883175671, -1.09447932, 0]
+      Rotation: [0, 0, -0.638996005]
+      Scale: [6.74196768, 0.46067813, 1]
+    SpriteRendererComponent:
+      Color: [0.949806929, 0.455301404, 0.0660097376, 1]
+      TilingFactor: 1
+    Rigidbody2DComponent:
+      BodyType: Static
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Density: 1
+      Friction: 0.5
+      Restitution: 0
+      RestitutionThreshold: 0.5
